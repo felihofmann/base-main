@@ -153,6 +153,8 @@
     justify-content: flex-start;
   }
 
+  .hero-spacer { flex-shrink: 0; height: 0; }
+
   .hero-top {
     width: 100%; max-width: 1000px;
     padding: 35px var(--pad) 0;
@@ -597,6 +599,7 @@
 
   <!-- Topline + Headline + Video zentriert -->
   <div class="hero-center">
+    <div class="hero-spacer"></div>
     <div class="hero-top">
       <p class="hero-tag">VOM DESIGN ÜBER DIE FASSUNG BIS ZUR KOMPLETT-BRILLE</p>
       <h1 class="hero-title">DIE BASE FÜR IHREN ERFOLG</h1>
@@ -830,6 +833,7 @@
     const video         = document.getElementById('heroVideo');
     const heroBtm       = document.querySelector('.hero-bottom');
     const heroTop       = document.querySelector('.hero-top');
+    const heroSpacer    = document.querySelector('.hero-spacer');
     const heroVideoWrap = document.querySelector('.hero-video-wrap');
     const heroCenter    = document.querySelector('.hero-center');
 
@@ -857,17 +861,24 @@
       const scrolled    = -rect.top;
       const progress    = Math.max(0, Math.min(1, scrolled / scrollRange));
 
-      /* Headline: slides from center to top during phase 1 (desktop only) */
+      /* Headline: slides from center to top during phase 1 */
+      const maxOffset = (heroCenter.offsetHeight - heroTop.offsetHeight) / 2;
       if (window.innerWidth >= 768) {
+        /* Desktop: translate headline (video position unaffected) */
+        heroSpacer.style.height = '0';
         if (progress <= PHASE1) {
           const p1 = progress / PHASE1;
-          const maxOffset = (heroCenter.offsetHeight - heroTop.offsetHeight) / 2;
           heroTop.style.transform = 'translateY(' + (maxOffset * (1 - p1)) + 'px)';
         } else {
           heroTop.style.transform = '';
         }
       } else {
+        /* Mobile: grow/shrink spacer above headline so video stays in flow */
         heroTop.style.transform = '';
+        const spacerH = progress <= PHASE1
+          ? maxOffset * (1 - progress / PHASE1)
+          : 0;
+        heroSpacer.style.height = spacerH + 'px';
       }
 
       /* Video: visible from start, plays scroll-driven from 10% */
