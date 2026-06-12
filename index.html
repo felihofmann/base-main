@@ -132,14 +132,7 @@
      HERO
   ───────────────────────────────────────────── */
   /* Hero: stacked — headline | video | copy */
-  .hero-scroll-container {
-    position: relative;
-    height: 400vh;
-  }
-
   .hero {
-    position: sticky;
-    top: var(--header-h);
     height: calc(100vh - var(--header-h));
     height: calc(100dvh - var(--header-h));
     background: var(--beige);
@@ -152,8 +145,6 @@
     display: flex; flex-direction: column; align-items: center;
     justify-content: flex-start;
   }
-
-  .hero-spacer { flex-shrink: 0; height: 0; }
 
   .hero-top {
     width: 100%; max-width: 1000px;
@@ -183,7 +174,7 @@
     padding: 0 var(--pad) 35px;
     display: flex; flex-direction: column;
     align-items: center; text-align: center; gap: 32px;
-    opacity: 0;
+    opacity: 1;
   }
 
   .hero-tag {
@@ -594,18 +585,16 @@
 <!-- ════════════════════════════════
      HERO
 ═════════════════════════════════ -->
-<div class="hero-scroll-container">
 <section class="hero" id="start">
 
-  <!-- Topline + Headline + Video zentriert -->
+  <!-- Topline + Headline + Video -->
   <div class="hero-center">
-    <div class="hero-spacer"></div>
     <div class="hero-top">
       <p class="hero-tag">VOM DESIGN ÜBER DIE FASSUNG BIS ZUR KOMPLETT-BRILLE</p>
       <h1 class="hero-title">DIE BASE FÜR IHREN ERFOLG</h1>
     </div>
     <div class="hero-video-wrap">
-      <video class="hero-video" muted playsinline preload="auto" id="heroVideo">
+      <video class="hero-video" autoplay muted playsinline preload="auto" id="heroVideo">
         <source src="assets/HeroAnimation Sketch.mp4" type="video/mp4">
       </video>
     </div>
@@ -626,7 +615,6 @@
   </div>
 
 </section>
-</div><!-- /.hero-scroll-container -->
 
 <!-- ════════════════════════════════
      PRODUCT SECTION
@@ -827,77 +815,16 @@
      JAVASCRIPT
 ═════════════════════════════════ -->
 <script>
-  /* Hero: scroll-driven headline intro + video playback */
+  /* Hero: autoplay video, freeze on last frame */
   (function () {
-    const container     = document.querySelector('.hero-scroll-container');
-    const video         = document.getElementById('heroVideo');
-    const heroBtm       = document.querySelector('.hero-bottom');
-    const heroTop       = document.querySelector('.hero-top');
-    const heroSpacer    = document.querySelector('.hero-spacer');
-    const heroVideoWrap = document.querySelector('.hero-video-wrap');
-    const heroCenter    = document.querySelector('.hero-center');
-
-    video.pause();
-    video.currentTime = 0;
-
-    /* iOS requires a play/pause gesture before seeking works */
-    let unlocked = false;
-    function unlockVideo() {
-      if (unlocked) return;
-      unlocked = true;
-      video.play().then(function () {
-        video.pause();
-        video.currentTime = 0;
-      }).catch(function () {});
-    }
-    document.addEventListener('touchstart', unlockVideo, { once: true, passive: true });
-
-    const PHASE1 = 0.25; // first 25% = headline slides up
-    let ticking = false;
-
-    function update() {
-      const rect        = container.getBoundingClientRect();
-      const scrollRange = container.offsetHeight - window.innerHeight;
-      const scrolled    = -rect.top;
-      const progress    = Math.max(0, Math.min(1, scrolled / scrollRange));
-
-      /* Headline: slides from center to top during phase 1 */
-      const maxOffset = (heroCenter.offsetHeight - heroTop.offsetHeight) / 2;
-      if (window.innerWidth >= 768) {
-        /* Desktop: translate headline (video position unaffected) */
-        heroSpacer.style.height = '0';
-        if (progress <= PHASE1) {
-          const p1 = progress / PHASE1;
-          heroTop.style.transform = 'translateY(' + (maxOffset * (1 - p1)) + 'px)';
-        } else {
-          heroTop.style.transform = '';
-        }
-      } else {
-        /* Mobile: grow/shrink spacer above headline so video stays in flow */
-        heroTop.style.transform = '';
-        const spacerH = progress <= PHASE1
-          ? maxOffset * (1 - progress / PHASE1)
-          : 0;
-        heroSpacer.style.height = spacerH + 'px';
-      }
-
-      /* Video: visible from start, plays scroll-driven from 10% */
-      if (video.duration) {
-        video.currentTime = progress < 0.10 ? 0 : ((progress - 0.10) / 0.90) * video.duration;
-      }
-
-      /* Copy + buttons fade in during last third */
-      heroBtm.style.opacity = Math.max(0, (progress - 0.67) / 0.33);
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      unlockVideo();
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-
-    video.addEventListener('loadedmetadata', update);
-    update(); /* set initial state before any scrolling */
+    const video = document.getElementById('heroVideo');
+    video.addEventListener('ended', function () {
+      video.currentTime = video.duration;
+    });
+    /* iOS fallback: trigger play on first touch if autoplay was blocked */
+    document.addEventListener('touchstart', function () {
+      if (video.paused && video.currentTime === 0) video.play().catch(function () {});
+    }, { once: true, passive: true });
   })();
 
   /* Hamburger menu */
