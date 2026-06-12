@@ -601,7 +601,7 @@
       <h1 class="hero-title">DIE BASE FÜR IHREN ERFOLG</h1>
     </div>
     <div class="hero-video-wrap">
-      <video class="hero-video" muted playsinline id="heroVideo">
+      <video class="hero-video" muted playsinline preload="auto" id="heroVideo">
         <source src="assets/HeroAnimation Sketch.mp4" type="video/mp4">
       </video>
     </div>
@@ -835,6 +835,18 @@
     video.pause();
     video.currentTime = 0;
 
+    /* iOS requires a play/pause gesture before seeking works */
+    let unlocked = false;
+    function unlockVideo() {
+      if (unlocked) return;
+      unlocked = true;
+      video.play().then(function () {
+        video.pause();
+        video.currentTime = 0;
+      }).catch(function () {});
+    }
+    document.addEventListener('touchstart', unlockVideo, { once: true, passive: true });
+
     const PHASE1 = 0.25; // first 25% = headline slides up
     let ticking = false;
 
@@ -864,6 +876,7 @@
     }
 
     window.addEventListener('scroll', function () {
+      unlockVideo();
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
 
