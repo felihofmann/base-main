@@ -141,6 +141,7 @@
     position: sticky;
     top: var(--header-h);
     height: calc(100vh - var(--header-h));
+    height: calc(100dvh - var(--header-h));
     background: var(--beige);
     display: flex; flex-direction: column; align-items: stretch;
     overflow: hidden;
@@ -462,16 +463,16 @@
     .header-logo { height: 28px; }
 
     /* Hero */
-    .hero        { padding-top: 32px; padding-bottom: 32px; }
     .hero-top    { padding: 20px var(--pad) 8px; }
     .hero-tag    { font-size: 14px; }
     .hero-title  { font-size: 42px; letter-spacing: -2.5px; }
     .hero-video-wrap {
-      width: 150%; max-width: none; flex: none;
+      flex: 1; min-height: 0;
+      width: 150%; max-width: none;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
-    .hero-video { width: 100%; height: auto; object-fit: initial; }
+    .hero-video { width: 100%; height: 100%; object-fit: contain; }
     .hero-bottom { padding: 9px var(--pad) 22px; gap: 20px; }
     .hero-body   { font-size: 16px; }
     .hero-buttons { flex-direction: column; align-items: stretch; width: 100%; max-width: 340px; }
@@ -856,11 +857,15 @@
       const scrolled    = -rect.top;
       const progress    = Math.max(0, Math.min(1, scrolled / scrollRange));
 
-      /* Headline: slides from center to top during phase 1 */
-      if (progress <= PHASE1) {
-        const p1 = progress / PHASE1;
-        const maxOffset = (heroCenter.offsetHeight - heroTop.offsetHeight) / 2;
-        heroTop.style.transform = 'translateY(' + (maxOffset * (1 - p1)) + 'px)';
+      /* Headline: slides from center to top during phase 1 (desktop only) */
+      if (window.innerWidth >= 768) {
+        if (progress <= PHASE1) {
+          const p1 = progress / PHASE1;
+          const maxOffset = (heroCenter.offsetHeight - heroTop.offsetHeight) / 2;
+          heroTop.style.transform = 'translateY(' + (maxOffset * (1 - p1)) + 'px)';
+        } else {
+          heroTop.style.transform = '';
+        }
       } else {
         heroTop.style.transform = '';
       }
