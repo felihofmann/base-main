@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA4970 – MASCA – BASE Eyewear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dunkelblau:  #295C83;
+    --dunkel-gruen:#5E6456;
+    --rot:         #9f1918;
+    --dark-nav:    #425050;
+    --header-h:    80px;
+    --pad:         44px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html  { scroll-behavior: smooth; }
+  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: sticky; top: 0; z-index: 200;
+    width: 100%; height: var(--header-h);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 var(--pad);
+    height: 100%; display: flex; align-items: center; gap: 36px;
+  }
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
+  .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+  .nav-item {
+    padding: 5px 9px; font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap; transition: color .15s; position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 9px;
+    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+  }
+  .nav-item:hover::after, .nav-item.active::after { width: calc(100% - 18px); }
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .action-item {
+    display: flex; gap: 5px; align-items: center; padding: 5px;
+    font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap; transition: color .15s; position: relative;
+  }
+  .action-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 5px;
+    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+  }
+  .action-item:hover::after { width: calc(100% - 10px); }
+  .action-item .ico      { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; background: none; border: none; cursor: pointer;
+    margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: transform .28s ease, opacity .28s ease; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav {
+    display: none; position: fixed; top: var(--header-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+    padding: 12px 24px 28px; z-index: 199; flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 12px 0; font-size: 17px; font-weight: 400; color: #000;
+    text-decoration: none; border-bottom: 1px solid #ebebeb; transition: color .15s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover, .mobile-nav a.active { color: var(--rot); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 13px; padding: 8px 20px;
+    font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 17px;
+    letter-spacing: -0.7px; text-decoration: none; cursor: pointer;
+    white-space: nowrap; border: 2px solid transparent;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .btn-red          { background: var(--rot); color: #fff; border-color: var(--rot); }
+  .btn-blue         { background: var(--dunkelblau); color: #fff; }
+  .btn-teal         { background: var(--dark-nav); color: #fff; }
+  .btn-outline-dark { background: transparent; border-color: #424242; color: #3d3d3d; }
+  .btn-red:hover          { background: transparent; color: var(--rot); }
+  .btn-blue:hover         { background: transparent; border-color: var(--dunkelblau); color: var(--dunkelblau); }
+  .btn-teal:hover         { background: transparent; border-color: var(--dark-nav); color: var(--dark-nav); }
+  .btn-outline-dark:hover { background: #424242; color: #fff; }
+
+  /* ─── DETAIL HERO ─── */
+  .detail-bg { background: linear-gradient(to bottom, #e3d8d0 0%, #fff 55%); }
+  .detail-section { max-width: 1280px; margin: 0 auto; padding: 44px var(--pad) 80px; }
+  .detail-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 62px; }
+
+  /* Viewer (left) */
+  .detail-viewer-card {
+    background: #fff; border-radius: 15px;
+    height: 530px; padding: 28px 28px 24px;
+    display: flex; flex-direction: column; align-items: center;
+    position: sticky; top: calc(var(--header-h) + 24px);
+    overflow: hidden;
+  }
+  .detail-brand-logo { height: 48px; width: auto; max-width: 220px; object-fit: contain; flex-shrink: 0; }
+  .detail-product-img {
+    flex: 1; width: 100%; object-fit: contain; margin: 16px 0;
+    min-height: 0; padding: 0;
+    transform: scale(1); transform-origin: center;
+    transition: opacity .2s ease;
+    pointer-events: none;
+  }
+  .detail-thumbnails {
+    display: flex; gap: 8px; align-items: center; justify-content: center;
+    flex-shrink: 0; padding-top: 8px;
+  }
+  .detail-thumb {
+    width: 70px; height: 52px; border-radius: 9px; overflow: hidden;
+    border: 1.5px solid #b6b6b6; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 5px; background: #fff; transition: border-color .2s;
+  }
+  .detail-thumb.active { border-color: #000; border-width: 2px; }
+  .detail-thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* Info (right) */
+  .detail-info { display: flex; flex-direction: column; }
+  .detail-info-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .detail-model-name { font-weight: 700; font-size: 75px; letter-spacing: -4.5px; line-height: 1.0; color: #000; }
+  .neu-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--rot); color: #fff; font-weight: 700; font-size: 15px;
+    padding: 4px 11px; border-radius: 20px; flex-shrink: 0;
+    align-self: flex-start; margin-top: 14px;
+  }
+  .detail-desc { font-weight: 300; font-size: 18px; color: #000; line-height: 1.55; margin-bottom: 24px; max-width: 530px; }
+
+  /* Spec table */
+  .detail-specs { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+  .detail-specs tr { border-top: 1px solid rgba(0,0,0,0.13); }
+  .detail-specs tr:last-child { border-bottom: 1px solid rgba(0,0,0,0.13); }
+  .detail-specs td { padding: 10px 0; font-size: 16px; vertical-align: middle; }
+  .spec-label { font-weight: 500; padding-right: 24px; white-space: nowrap; letter-spacing: -0.6px; }
+  .spec-value { font-weight: 300; }
+
+  /* Dimensions */
+  .detail-dims { width: 100%; max-width: 530px; object-fit: contain; margin: 40px 0 6px; mix-blend-mode: multiply; }
+  .detail-conformity {
+    display: block; font-weight: 300; font-size: 16px; color: #000;
+    text-decoration: none; margin-bottom: 40px; cursor: pointer;
+  }
+  .detail-conformity:hover { text-decoration: underline; }
+
+  /* CTA buttons */
+  .detail-ctas { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .detail-ctas .btn { width: 100%; font-size: 18px; padding: 10px 20px; letter-spacing: -1px; border-radius: 13px; }
+
+  /* Price box */
+  .detail-price-box { background: #413f3c; border-radius: 15px; padding: 22px 28px; color: #fff; }
+  .price-box-title { font-weight: 700; font-size: 18px; letter-spacing: -0.6px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .price-box-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); gap: 16px; }
+  .price-box-label { font-weight: 300; font-size: 18px; }
+  .price-box-link { font-weight: 300; font-size: 16px; color: #fff; text-decoration: underline; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .price-box-note { padding-top: 12px; font-weight: 300; font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+
+  /* ─── SIE HABEN DIE WAHL ─── */
+  .detail-wahl-wrap { max-width: 1280px; margin: 0 auto; padding: 80px var(--pad) 80px; text-align: center; }
+  .detail-wahl-tag { font-weight: 300; font-size: 18px; color: var(--rot); letter-spacing: -0.75px; margin-bottom: 10px; }
+  .detail-wahl-title { font-weight: 700; font-size: 72px; letter-spacing: -4.5px; color: #000; line-height: 1.0; margin-bottom: 24px; }
+  .detail-wahl-body { font-weight: 300; font-size: 18px; color: #000; line-height: 1.6; max-width: 720px; margin: 0 auto 48px; }
+  .wahl-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+  .wahl-card {
+    border-radius: 15px; padding: 32px 28px 28px;
+    display: flex; flex-direction: column; align-items: center; min-height: 333px;
+    cursor: pointer; transition: transform .3s ease;
+  }
+  .wahl-card:hover { transform: scale(1.02); }
+  .wahl-card-green { background: linear-gradient(to bottom, #e2e9da, #f5f8f2); }
+  .wahl-card-blue  { background: linear-gradient(to bottom, #e4e9e9, #f4f4f4); }
+  .wahl-card-beige { background: linear-gradient(to bottom, #ede5d8, #f0ede7); }
+  .wahl-card-tag { font-weight: 300; font-size: 18px; letter-spacing: -0.6px; margin-bottom: 6px; }
+  .tag-green { color: var(--dunkel-gruen); }
+  .tag-blue  { color: var(--dunkelblau); }
+  .tag-red   { color: var(--rot); }
+  .wahl-card-title { font-weight: 700; font-size: 33px; letter-spacing: -1.75px; color: #000; line-height: 1.2; margin-bottom: 14px; }
+  .wahl-card-body { font-weight: 300; font-size: 19px; color: #000; line-height: 1.45; flex: 1; }
+  .wahl-card .btn { margin-top: 24px; font-size: 16px; }
+
+  /* ─── WEITERE MODELLE ─── */
+  .mehr-section { padding: 60px var(--pad) 80px; text-align: center; }
+  .section-heading { font-weight: 700; font-size: 45px; letter-spacing: -2px; color: #000; text-align: center; margin-bottom: 36px; }
+  .mehr-carousel-wrap { display: flex; align-items: center; justify-content: center; gap: 16px; max-width: 1280px; margin: 0 auto; }
+  .mehr-viewport { overflow: hidden; width: 876px; flex-shrink: 0; display: block; }
+  .carousel-arrow {
+    background: none; border: none; cursor: pointer;
+    font-size: 42px; color: #000; width: 32px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.5; line-height: 1; transition: opacity .2s;
+  }
+  .carousel-arrow:hover { opacity: 1; }
+  .mehr-cards { display: flex; gap: 30px; flex-wrap: nowrap; will-change: transform; }
+  .mehr-card {
+    width: 272px; flex-shrink: 0; border-radius: 15px; overflow: hidden;
+    background: linear-gradient(to top, #e2e2e2 0%, #f9f9f9 94%);
+    cursor: pointer; transition: transform .3s ease; position: relative;
+  }
+  .mehr-card:hover { transform: scale(1.02); }
+  .mehr-card-img-wrap {
+    background: #fff; margin: 10px 10px 0; border-radius: 10px;
+    height: 185px; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .mehr-card-img { width: 100%; height: 100%; object-fit: contain; padding: 12px; transition: transform .4s ease; }
+  .mehr-card:hover .mehr-card-img { transform: scale(1.10); }
+  .mehr-card-info { padding: 12px 14px 16px; text-align: center; color: #413f3c; display: flex; flex-direction: column; gap: 3px; }
+  .mehr-card-model { font-weight: 700; font-size: 18px; line-height: 1.2; }
+  .mehr-card-desc  { font-weight: 300; font-size: 16px; }
+  .mehr-card-neu { position: absolute; top: 8px; right: 8px; background: var(--rot); color: #fff; font-weight: 700; font-size: 14px; padding: 3px 10px; border-radius: 20px; }
+  .mehr-cta { margin-top: 32px; }
+
+  /* ─── FOOTER ─── */
+  .footer { background: rgba(12,12,12,0.9); padding: 86px var(--pad); }
+  .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; }
+  .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
+  .footer-col  { display: flex; flex-direction: column; }
+  .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
+  .footer-col-l { font-weight: 300; font-size: 15px; line-height: 2; color: #fff; text-decoration: none; cursor: pointer; transition: color .15s; position: relative; width: fit-content; }
+  .footer-col-l::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease; }
+  .footer-col-l:hover::after { width: 100%; }
+  .copyright { background: rgba(12,12,12,0.9); border-top: 1px solid #2a2a2a; padding: 14px var(--pad); }
+  .copyright-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center; font-size: 14px; color: #fff; }
+  .copyright-inner a { color: #fff; text-decoration: none; position: relative; }
+  .copyright-inner a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease; }
+  .copyright-inner a:hover::after { width: 100%; }
+
+  /* ═══ BREAKPOINTS ═══ */
+  @media (max-width: 1279px) {
+    :root { --pad: 32px; }
+    .detail-grid { grid-template-columns: 2fr 1fr; gap: 40px; }
+    .detail-viewer-card { height: 420px; }
+    .detail-model-name { font-size: 60px; }
+    .detail-wahl-title { font-size: 56px; letter-spacing: -3px; }
+    .mehr-viewport { width: 700px; }
+  }
+  @media (max-width: 767px) {
+    :root { --header-h: 62px; --pad: 20px; }
+    .nav, .header-actions { display: none; }
+    .hamburger { display: flex; }
+    .detail-grid { grid-template-columns: 1fr; gap: 28px; }
+    .detail-viewer-card { height: 320px; }
+    .detail-model-name { font-size: 48px; letter-spacing: -3px; }
+    .detail-wahl-title { font-size: 40px; letter-spacing: -2px; }
+    .wahl-cards { grid-template-columns: 1fr; }
+    .mehr-viewport { width: 272px; }
+    .footer { padding: 28px var(--pad); }
+    .footer-logo { display: none; }
+    .footer-cols  { gap: 16px; margin-left: 0; }
+    .footer-col   { width: calc(50% - 8px); }
+    .copyright    { padding: 12px var(--pad); }
+  }
+
+  .page-content { opacity: 0; }
+  .page-content.page-ready   { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
+    <nav class="nav">
+      <a href="konzept.html"        class="nav-item">KONZEPT</a>
+      <a href="kollektionen.html"   class="nav-item active">KOLLEKTIONEN</a>
+      <a href="kollektionen.html"   class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"          class="nav-item">ÜBER</a>
+      <a href="index.html"          class="nav-item">SERVICE</a>
+      <a href="index.html#cta"      class="nav-item">PARTNER</a>
+    </nav>
+    <div class="header-actions">
+      <a href="index.html" class="action-item"><img class="ico" src="assets/vector-search.svg" alt="">OPTIKER-SUCHE</a>
+      <a href="index.html" class="action-item"><img class="ico-user" src="assets/user-icon.svg" alt="">LOGIN</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="konzept.html">KONZEPT</a>
+  <a href="kollektionen.html" class="active">KOLLEKTIONEN</a>
+  <a href="kollektionen.html">FASSUNGEN</a>
+  <a href="index.html">GLÄSER</a>
+  <a href="index.html">KOMPLETTBRILLE</a>
+  <a href="index.html">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
+  <a href="index.html#cta">PARTNER</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
+</nav>
+
+<main class="page-content">
+
+<div class="detail-bg">
+<div class="detail-section">
+  <div class="detail-grid">
+
+    <!-- LEFT: Viewer -->
+    <div>
+      <div class="detail-viewer-card">
+        <img class="detail-brand-logo" src="assets/MASCA-nav.svg" alt="MASCA">
+        <img class="detail-product-img" id="mainProductImg" src="assets/brille-ma4970-1.png" alt="MASCA MA4970">
+        <div class="detail-thumbnails">
+          <button class="detail-thumb active" data-src="assets/brille-ma4970-1.png" data-scale="1">
+            <img src="assets/brille-ma4970-1.png" alt="Schwarz matt / Gold">
+          </button>
+          <button class="detail-thumb" data-src="assets/brille-ma4970-2.png" data-scale="1">
+            <img src="assets/brille-ma4970-2.png" alt="Variante 2">
+          </button>
+          <button class="detail-thumb" data-src="assets/brille-ma4970-3.png" data-scale="1">
+            <img src="assets/brille-ma4970-3.png" alt="Variante 3">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="detail-info">
+      <div class="detail-info-header">
+        <h1 class="detail-model-name">MA4970</h1>
+        <span class="neu-badge">NEU</span>
+      </div>
+      <p class="detail-desc">Klassische Square-Form. Vollrandfassung aus Edelstahl mit warmen Goldakzenten am Unterrahmen, transparente Acetatbügel.</p>
+
+      <table class="detail-specs">
+        <tr><td class="spec-label">Kollektion</td><td class="spec-value">MASCA</td></tr>
+        <tr><td class="spec-label">Artikel-Nr.</td><td class="spec-value">MA4970</td></tr>
+        <tr><td class="spec-label">Rahmentyp</td><td class="spec-value">Vollrand</td></tr>
+        <tr><td class="spec-label">Form</td><td class="spec-value">Square/Rectangle</td></tr>
+        <tr><td class="spec-label">Material</td><td class="spec-value">Edelstahl, Acetatbügel</td></tr>
+        <tr><td class="spec-label">Farbe</td><td class="spec-value">Schwarz matt / Gold</td></tr>
+        <tr><td class="spec-label">Geschlecht</td><td class="spec-value">Unisex</td></tr>
+      </table>
+
+      <img class="detail-dims" src="https://www.figma.com/api/mcp/asset/328cae3a-9565-4c49-b86c-ea4a7df42ee5" alt="Abmessungen MA4970">
+      <a href="index.html" class="detail-conformity">↓ EU-Konformitätserklärung MA4970 (PDF)</a>
+
+      <div class="detail-ctas">
+        <a href="index.html" class="btn btn-red">NUR FASSUNG BESTELLEN</a>
+        <a href="index.html" class="btn btn-outline-dark">BRILLE-KOMPLETT KONFIGURIEREN</a>
+      </div>
+
+      <div class="detail-price-box">
+        <div class="price-box-title">IHRE OPTIKER-PREISE</div>
+        <div class="price-box-row">
+          <span class="price-box-label">Nur Fassung ohne Gläser</span>
+          <a href="index.html" class="price-box-link">Login</a>
+        </div>
+        <div class="price-box-row">
+          <span class="price-box-label">Komplettbrille inkl. BASE Vision Gläser</span>
+          <a href="index.html" class="price-box-link">Login</a>
+        </div>
+        <div class="price-box-note">
+          Wareneinsatz unter 20&nbsp;% auf die fertige Komplettbrille.<br>
+          Konkrete Konditionen nach Partner-Login.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SIE HABEN DIE WAHL -->
+<section>
+  <div class="detail-wahl-wrap">
+    <p class="detail-wahl-tag">FASSUNG. KOMPLETTBRILLE. BEST-PREIS-SYSTEM</p>
+    <h2 class="detail-wahl-title">SIE HABEN DIE WAHL.</h2>
+    <p class="detail-wahl-body">Wir liefern Ihnen die MA4970 als reine Fassung oder als fertige Komplettbrille mit BASE Vision Gläsern Ihrer Wahl – die Konfiguration geht einfach und bequem über das Partnerportal. Der Vorteil für Sie: Eine Lieferung. Eine Rechnung. Ein Ansprechpartner.</p>
+    <div class="wahl-cards">
+      <div class="wahl-card wahl-card-green">
+        <div class="wahl-card-tag tag-green">BASE FASSUNG</div>
+        <div class="wahl-card-title">NUR DIE FASSUNG</div>
+        <div class="wahl-card-body">Sie arbeiten mit eigenen Glaslieferanten. Lagerverfügbarkeit 95&nbsp;%. Versand binnen Tagesfrist aus Rechberghausen.</div>
+        <a href="index.html" class="btn btn-teal">BESTELLEN</a>
+      </div>
+      <div class="wahl-card wahl-card-blue">
+        <div class="wahl-card-tag tag-blue">INKL. BASE VISION GLÄSER</div>
+        <div class="wahl-card-title">BRILLE-KOMPLETT</div>
+        <div class="wahl-card-body">Fassung MASCA MA4970 mit BASE Vision Glas. Geometrie und Schliff aufeinander abgestimmt. Konfigurierbar im Partnerportal.</div>
+        <a href="index.html" class="btn btn-blue">KONFIGURIEREN</a>
+      </div>
+      <div class="wahl-card wahl-card-beige">
+        <div class="wahl-card-tag tag-red">ENDKUNDEN-KONZEPT</div>
+        <div class="wahl-card-title">BEST-PREIS-ANGEBOT</div>
+        <div class="wahl-card-body">Die MASCA MA4970 ist Teil des BPO Sortiments und damit auch im Best-Preis-Optik System ausspielbar.</div>
+        <a href="index.html" class="btn btn-red">MEHR INFOS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEITERE MODELLE -->
+<section class="mehr-section">
+  <h2 class="section-heading">WEITERE MODELLE</h2>
+  <div class="mehr-carousel-wrap">
+    <button class="carousel-arrow carousel-prev">&#8249;</button>
+    <div class="mehr-viewport">
+      <div class="mehr-cards">
+        <div class="mehr-card">
+          <div class="mehr-card-img-wrap">
+            <img class="mehr-card-img" src="https://www.figma.com/api/mcp/asset/819a787d-2adb-4dbc-acf2-2a6bd2d55443" alt="MA4940">
+          </div>
+          <div class="mehr-card-info">
+            <span class="mehr-card-model">MA4940</span>
+            <span class="mehr-card-desc">Round | Graphit / Crystal</span>
+          </div>
+        </div>
+        <div class="mehr-card">
+          <span class="mehr-card-neu">NEU</span>
+          <div class="mehr-card-img-wrap">
+            <img class="mehr-card-img" src="https://www.figma.com/api/mcp/asset/2dec6e42-ee7f-4de7-beee-6f93782b8672" alt="MA5030">
+          </div>
+          <div class="mehr-card-info">
+            <span class="mehr-card-model">MA5030</span>
+            <span class="mehr-card-desc">Panto | Havana / Gold</span>
+          </div>
+        </div>
+        <div class="mehr-card">
+          <div class="mehr-card-img-wrap">
+            <img class="mehr-card-img" src="https://www.figma.com/api/mcp/asset/6d372c17-3758-42b4-a5e9-296444234bee" alt="MA4980">
+          </div>
+          <div class="mehr-card-info">
+            <span class="mehr-card-model">MA4980</span>
+            <span class="mehr-card-desc">Cat-Eye | Crystal / Rosé</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-arrow carousel-next">&#8250;</button>
+  </div>
+  <div class="mehr-cta">
+    <a href="masca.html" class="btn btn-red">ZUR GESAMTEN KOLLEKTION</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-h">SORTIMENT</span>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
+        <a class="footer-col-l">Gläser</a>
+        <a class="footer-col-l">Komplettbrillen</a>
+        <a class="footer-col-l">Sonnenbrillen</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KOLLEKTIONEN</span>
+        <a class="footer-col-l">B1</a>
+        <a class="footer-col-l">BE</a>
+        <a href="masca.html" class="footer-col-l">MASCA</a>
+        <a class="footer-col-l">DIFERRO</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">PARTNER</span>
+        <a class="footer-col-l">Konzept</a>
+        <a class="footer-col-l">BPO-System</a>
+        <a class="footer-col-l">Partner werden</a>
+        <a class="footer-col-l">Partner-Login</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">ÜBER</span>
+        <a class="footer-col-l">Designhaus</a>
+        <a class="footer-col-l">Unternehmen</a>
+        <a class="footer-col-l">Karriere</a>
+        <a class="footer-col-l">Presse</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KONTAKT</span>
+        <a class="footer-col-l">Zentrale</a>
+        <a class="footer-col-l">Service</a>
+        <a class="footer-col-l">Newsletter</a>
+        <a class="footer-col-l">Downloads</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="copyright">
+  <div class="copyright-inner">
+    <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
+    <span>DE | EN</span>
+  </div>
+</div>
+
+</main>
+
+<script>
+  /* Hamburger */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', function () {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+  document.querySelectorAll('.mobile-nav a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  /* Thumbnail switcher with fade */
+  const thumbs  = document.querySelectorAll('.detail-thumb');
+  const mainImg = document.getElementById('mainProductImg');
+  thumbs.forEach(function (thumb) {
+    thumb.addEventListener('click', function () {
+      if (thumb.classList.contains('active')) return;
+      thumbs.forEach(function (t) { t.classList.remove('active'); });
+      thumb.classList.add('active');
+      mainImg.style.opacity = '0';
+      setTimeout(function () {
+        mainImg.src = thumb.dataset.src;
+        mainImg.style.transform = 'scale(' + (thumb.dataset.scale || '1.125') + ') translateZ(0)';
+        mainImg.style.opacity = '1';
+      }, 200);
+    });
+  });
+
+  /* Carousel — 3-card infinite slide */
+  (function () {
+    var track = document.querySelector('.mehr-cards');
+    var orig  = Array.from(track.children);
+    var N    = orig.length;
+    var CARD = 272 + 30;
+    var PAGE = N * CARD;
+    var busy = false;
+
+    var before = orig.map(function (c) { return c.cloneNode(true); });
+    var after  = orig.map(function (c) { return c.cloneNode(true); });
+    before.reverse().forEach(function (c) { track.insertBefore(c, track.firstChild); });
+    after.forEach(function (c) { track.appendChild(c); });
+
+    var pos = PAGE;
+    track.style.transition = 'none';
+    track.style.transform  = 'translateX(-' + pos + 'px)';
+
+    function go(newPos, animate) {
+      track.style.transition = animate ? 'transform 0.42s ease' : 'none';
+      track.style.transform  = 'translateX(-' + newPos + 'px)';
+    }
+
+    function next() {
+      if (busy) return;
+      busy = true;
+      pos += CARD;
+      go(pos, true);
+      setTimeout(function () {
+        if (pos >= PAGE * 2) { pos -= PAGE; go(pos, false); }
+        busy = false;
+      }, 440);
+    }
+
+    function prev() {
+      if (busy) return;
+      busy = true;
+      pos -= CARD;
+      go(pos, true);
+      setTimeout(function () {
+        if (pos <= 0) { pos += PAGE; go(pos, false); }
+        busy = false;
+      }, 440);
+    }
+
+    document.querySelector('.carousel-prev').addEventListener('click', prev);
+    document.querySelector('.carousel-next').addEventListener('click', next);
+  })();
+
+  /* Page transitions */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () { pageContent.classList.add('page-ready'); });
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+</script>
+
+</body>
+</html>

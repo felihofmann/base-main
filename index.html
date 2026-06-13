@@ -33,10 +33,10 @@
   .header {
     position: sticky; top: 0; z-index: 200;
     width: 100%; height: var(--header-h);
-    background: rgba(12,12,12,0.90);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
   }
 
   .header-inner {
@@ -46,7 +46,8 @@
     display: flex; align-items: center; gap: 36px;
   }
 
-  .header-logo { height: 36px; width: auto; flex-shrink: 0; }
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
 
   .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
   .nav-item {
@@ -58,10 +59,11 @@
   }
   .nav-item::after {
     content: ''; position: absolute; bottom: 2px; left: 9px;
-    width: 0; height: 1.5px; background: var(--rot);
+    width: 0; height: 1.5px; background: #fff;
     transition: width .3s ease;
   }
   .nav-item:hover::after { width: calc(100% - 18px); }
+  .nav-item.active::after { width: calc(100% - 18px); }
 
   .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
   .action-item {
@@ -73,7 +75,7 @@
   }
   .action-item::after {
     content: ''; position: absolute; bottom: 2px; left: 5px;
-    width: 0; height: 1.5px; background: var(--rot);
+    width: 0; height: 1.5px; background: #fff;
     transition: width .3s ease;
   }
   .action-item:hover::after { width: calc(100% - 10px); }
@@ -114,6 +116,7 @@
   }
   .mobile-nav a:last-child { border-bottom: none; }
   .mobile-nav a:hover { color: var(--rot); }
+  .mobile-nav a.active { color: var(--rot); }
 
   /* ─────────────────────────────────────────────
      BUTTONS
@@ -186,14 +189,15 @@
     padding: 0 var(--pad) 56px;
     display: flex; flex-direction: column;
     align-items: center; text-align: center; gap: 32px;
-    opacity: 1;
+    opacity: 0;
+    transition: opacity 1s ease;
     position: relative; z-index: 2;
     margin-top: -20px;
     margin-bottom: 35px;
   }
 
   .hero-tag {
-    font-weight: 300; font-size: 20px;
+    font-weight: 300; font-size: 18px;
     color: var(--rot); letter-spacing: -0.4px; margin-bottom: 14px;
   }
 
@@ -203,7 +207,7 @@
   }
 
   .hero-body {
-    font-weight: 300; font-size: 20px;
+    font-weight: 300; font-size: 18px;
     color: #000; line-height: 1.6; max-width: 680px;
   }
 
@@ -242,12 +246,12 @@
     cursor: pointer;
     transition: transform .3s ease;
   }
-  .card:hover { transform: scale(1.02); }
+  .card:hover { transform: scale(1.01); }
   .card-koll { background: linear-gradient(to bottom, #e2e9da, #f7f9f6); }
   .card-gl   { background: linear-gradient(to bottom, #E4E9E9, #f6f8f8); }
 
   .card-tag {
-    font-weight: 300; font-size: 20px; letter-spacing: -0.5px;
+    font-weight: 300; font-size: 18px; letter-spacing: -0.5px;
     margin-bottom: -7px;
   }
   .card-koll .card-tag { color: var(--dunkel-gruen); }
@@ -276,7 +280,7 @@
     cursor: pointer;
     transition: transform .3s ease;
   }
-  .card-ko:hover { transform: scale(1.02); }
+  .card-ko:hover { transform: scale(1.01); }
   .card-ko-content {
     padding: 44px 40px 40px;
     display: flex; flex-direction: column;
@@ -296,8 +300,27 @@
      QUOTES SLIDER
   ───────────────────────────────────────────── */
   .quotes-outer {
+    position: relative;
     padding: 0 0 140px;
     overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+  .q-blur-left, .q-blur-right {
+    position: absolute; top: 0; bottom: 0; width: 18%;
+    z-index: 5; pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .q-blur-left {
+    left: 0;
+    mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  }
+  .q-blur-right {
+    right: 0;
+    mask-image: linear-gradient(to left, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
   }
 
   @keyframes marquee {
@@ -321,17 +344,21 @@
     min-height: 210px;
     transition: transform .3s ease;
   }
-  .q-slide:hover { transform: scale(1.02); }
+  .q-slide:hover { transform: scale(1.01); }
 
   .q-slide-text {
     font-weight: 700; font-size: 29px; line-height: 1.09;
     color: #fff; letter-spacing: -1.5px; text-align: center;
+    transition: color .3s ease;
   }
+  .q-slide:hover .q-slide-text { color: #333; }
   .q-slide-stars { display: none; }
   .q-slide-author {
     font-weight: 400; font-size: 18px;
     color: #fff; letter-spacing: -0.5px; text-align: center;
+    transition: color .3s ease;
   }
+  .q-slide:hover .q-slide-author { color: #555; }
 
   /* ─────────────────────────────────────────────
      BPO SECTION
@@ -347,7 +374,7 @@
     cursor: pointer;
     transition: transform .3s ease;
   }
-  .bpo-card:hover { transform: scale(1.02); }
+  .bpo-card:hover { transform: scale(1.01); }
 
   .bpo-img-wrap { position: relative; overflow: hidden; }
   .bpo-img-wrap > img.bpo-photo {
@@ -364,7 +391,7 @@
     display: flex; flex-direction: column;
     gap: 14px; justify-content: center;
   }
-  .bpo-tag  { font-weight: 300; font-size: 20px; color: #e5e5e5; letter-spacing: -0.4px; margin-bottom: -7px; }
+  .bpo-tag  { font-weight: 300; font-size: 18px; color: #e5e5e5; letter-spacing: -0.4px; margin-bottom: -7px; }
   .bpo-title { font-weight: 700; font-size: 34px; color: #fff; letter-spacing: -1.5px; line-height: 1.1; }
   .bpo-desc  { font-weight: 300; font-size: 18px; color: #fff; line-height: 1.6; }
   .bpo-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
@@ -387,7 +414,7 @@
      FOOTER
   ───────────────────────────────────────────── */
   .footer {
-    background: #0C0C0C;
+    background: rgba(12, 12, 12, 0.9);
     padding: 86px var(--pad) 86px;
   }
   .footer-inner {
@@ -414,7 +441,7 @@
      COPYRIGHT BAR
   ───────────────────────────────────────────── */
   .copyright {
-    background: #0C0C0C;
+    background: rgba(12, 12, 12, 0.9);
     border-top: 1px solid #2a2a2a;
     padding: 14px var(--pad);
   }
@@ -484,6 +511,7 @@
     .nav, .header-actions { display: none; }
     .hamburger { display: flex; }
     .header-inner { gap: 0; }
+    .header-logo-link { flex-shrink: 0; }
     .header-logo { height: 28px; }
 
     /* Hero */
@@ -563,6 +591,11 @@
     .copyright { padding: 12px var(--pad); }
     .copyright-inner { gap: 14px; font-size: 13px; }
   }
+
+  /* Page transition — only content fades, header stays */
+  .page-content { opacity: 0; }
+  .page-content.page-ready { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
 </style>
 </head>
 <body>
@@ -572,26 +605,26 @@
 ═════════════════════════════════ -->
 <header class="header">
   <div class="header-inner">
-    <img class="header-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
 
     <nav class="nav">
-      <a href="#"         class="nav-item">KONZEPT</a>
-      <a href="#produkte" class="nav-item">KOLLEKTIONEN</a>
-      <a href="#produkte" class="nav-item">FASSUNGEN</a>
-      <a href="#produkte" class="nav-item">GLÄSER</a>
-      <a href="#produkte" class="nav-item">KOMPLETTBRILLE</a>
-      <a href="#bpo"      class="nav-item">BEST-PREIS-OPTIK</a>
-      <a href="#"         class="nav-item">ÜBER</a>
-      <a href="#"         class="nav-item">SERVICE</a>
+      <a href="konzept.html"         class="nav-item">KONZEPT</a>
+      <a href="kollektionen.html" class="nav-item">KOLLEKTIONEN</a>
+      <a href="kollektionen.html" class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"         class="nav-item">ÜBER</a>
+      <a href="index.html"         class="nav-item">SERVICE</a>
       <a href="#cta"      class="nav-item">PARTNER</a>
     </nav>
 
     <div class="header-actions">
-      <a href="#" class="action-item">
+      <a href="index.html" class="action-item">
         <img class="ico" src="assets/vector-search.svg" alt="">
         OPTIKER-SUCHE
       </a>
-      <a href="#" class="action-item">
+      <a href="index.html" class="action-item">
         <img class="ico-user" src="assets/user-icon.svg" alt="">
         LOGIN
       </a>
@@ -605,18 +638,20 @@
 
 <!-- Mobile nav -->
 <nav class="mobile-nav" id="mobileNav">
-  <a href="#">KONZEPT</a>
-  <a href="#produkte" class="close-nav">KOLLEKTIONEN</a>
-  <a href="#produkte" class="close-nav">FASSUNGEN</a>
-  <a href="#produkte" class="close-nav">GLÄSER</a>
-  <a href="#produkte" class="close-nav">KOMPLETTBRILLE</a>
-  <a href="#bpo"      class="close-nav">BEST-PREIS-OPTIK</a>
-  <a href="#">ÜBER</a>
-  <a href="#">SERVICE</a>
+  <a href="konzept.html">KONZEPT</a>
+  <a href="kollektionen.html">KOLLEKTIONEN</a>
+  <a href="kollektionen.html" class="close-nav">FASSUNGEN</a>
+  <a href="index.html" class="close-nav">GLÄSER</a>
+  <a href="index.html" class="close-nav">KOMPLETTBRILLE</a>
+  <a href="index.html"      class="close-nav">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
   <a href="#cta" class="close-nav">PARTNER</a>
-  <a href="#">OPTIKER-SUCHE</a>
-  <a href="#">LOGIN</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
 </nav>
+
+<main class="page-content">
 
 <!-- ════════════════════════════════
      HERO
@@ -645,7 +680,7 @@
       zu können. Und all das direkt vom Hersteller.
     </p>
     <div class="hero-buttons">
-      <a href="#produkte" class="btn btn-red">HIER MEHR ERFAHREN</a>
+      <a href="konzept.html" class="btn btn-red">HIER MEHR ERFAHREN</a>
       <a href="#cta"      class="btn btn-outline-dark">INFO-CALL VEREINBAREN</a>
     </div>
   </div>
@@ -671,7 +706,7 @@
           Alle Fassungen unserer exklusiven Marken werden von internationalen
           Top-Designern in unserem Designhaus in Baden-Württemberg gestaltet.
         </p>
-        <a href="#" class="btn btn-dark">ZU DEN KOLLEKTIONEN</a>
+        <a href="kollektionen.html" class="btn btn-dark">ZU DEN KOLLEKTIONEN</a>
       </div>
 
       <!-- Card Gläser -->
@@ -683,7 +718,7 @@
           Wir produzieren hochpräzise Premium-Gläser für alle Brillen-Arten,
           von Einstärken bis Gleitsicht – alles „Made in Europe".
         </p>
-        <a href="#" class="btn btn-blue">ZUM GLAS-PROGRAMM</a>
+        <a href="index.html" class="btn btn-blue">ZUM GLAS-PROGRAMM</a>
       </div>
 
     </div><!-- /.product-row -->
@@ -700,7 +735,7 @@
           Andererseits ist es ganz unkompliziert und einfach für Sie: Bequem und individuell über das
           BASE-Partner-Portal bestellen und die Komplett-Brille wird nach Ihren Vorgaben hergestellt und direkt zu Ihnen geliefert.
         </p>
-        <div><a href="#" class="btn btn-red">MEHR ERFAHREN</a></div>
+        <div><a href="index.html" class="btn btn-red">MEHR ERFAHREN</a></div>
       </div>
       <img class="card-ko-image" src="assets/image4.png" alt="Komplett-Brille">
     </div>
@@ -715,6 +750,8 @@
   <h2 class="section-heading">ÜBER 1.800 OPTIKER VERTRAUEN UNS.</h2>
 
   <div class="quotes-outer">
+    <div class="q-blur-left"></div>
+    <div class="q-blur-right"></div>
     <div class="q-track" id="qTrack">
 
         <div class="q-slide">
@@ -772,7 +809,7 @@
         was am wichtigsten ist: Für Ihre Kunden da zu sein.
       </p>
       <div class="bpo-buttons">
-        <a href="#"    class="btn btn-white">ALLES ZUR BEST-PREIS-OPTIK</a>
+        <a href="index.html"    class="btn btn-white">ALLES ZUR BEST-PREIS-OPTIK</a>
         <a href="#cta" class="btn btn-outline-light">BPO-PARTNER WERDEN</a>
       </div>
     </div>
@@ -785,7 +822,7 @@
 ═════════════════════════════════ -->
 <section id="cta" class="cta">
   <h2 class="cta-title">INTERESSIERT?</h2>
-  <a href="#" class="btn btn-red">INFO-CALL VEREINBAREN</a>
+  <a href="index.html" class="btn btn-red">INFO-CALL VEREINBAREN</a>
 </section>
 
 <!-- ════════════════════════════════
@@ -797,7 +834,7 @@
     <div class="footer-cols">
       <div class="footer-col">
         <span class="footer-col-h">SORTIMENT</span>
-        <a class="footer-col-l">Fassungen</a>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
         <a class="footer-col-l">Gläser</a>
         <a class="footer-col-l">Komplettbrillen</a>
         <a class="footer-col-l">Sonnenbrillen</a>
@@ -840,26 +877,42 @@
 <div class="copyright">
   <div class="copyright-inner">
     <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
-    <a href="#">Datenschutz</a>
-    <a href="#">AGB</a>
-    <a href="#">Impressum</a>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
     <span>DE | EN</span>
   </div>
 </div>
+
+</main>
 
 <!-- ════════════════════════════════
      JAVASCRIPT
 ═════════════════════════════════ -->
 <script>
-  /* Hero: autoplay video, freeze on last frame */
+  /* Hero: autoplay video, freeze on last frame, fade in copy on end */
   (function () {
-    const video = document.getElementById('heroVideo');
+    const video  = document.getElementById('heroVideo');
+    const bottom = document.querySelector('.hero-bottom');
+
+    function showBottom() {
+      bottom.style.opacity = '1';
+    }
+
     video.addEventListener('ended', function () {
       video.currentTime = video.duration;
+      showBottom();
     });
+
+    /* Fallback: if video can't play (autoplay blocked), show copy immediately */
+    video.addEventListener('error', showBottom);
+    setTimeout(function () {
+      if (video.paused && video.currentTime === 0) showBottom();
+    }, 4000);
+
     /* iOS fallback: trigger play on first touch if autoplay was blocked */
     document.addEventListener('touchstart', function () {
-      if (video.paused && video.currentTime === 0) video.play().catch(function () {});
+      if (video.paused && video.currentTime === 0) video.play().catch(showBottom);
     }, { once: true, passive: true });
   })();
 
@@ -895,6 +948,22 @@
       if (e.target.closest('a, button')) return;
       var link = card.querySelector('a');
       if (link) link.click();
+    });
+  });
+
+  /* Page transitions — header stays, only content fades */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () {
+    pageContent.classList.add('page-ready');
+  });
+
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
     });
   });
 </script>

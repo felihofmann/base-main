@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konzept – BASE Eyewear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Variables ── */
+  :root {
+    --dunkelblau:  #295C83;
+    --dunkel-gruen:#5E6456;
+    --rot:         #9f1918;
+    --dark-nav:    #425050;
+    --header-h:    80px;
+    --pad:         44px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html  { scroll-behavior: smooth; }
+  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: sticky; top: 0; z-index: 200;
+    width: 100%; height: var(--header-h);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 var(--pad);
+    height: 100%; display: flex; align-items: center; gap: 36px;
+  }
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
+  .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+  .nav-item {
+    padding: 5px 9px; font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap; transition: color .15s; position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 9px;
+    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+  }
+  .nav-item:hover::after, .nav-item.active::after { width: calc(100% - 18px); }
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .action-item {
+    display: flex; gap: 5px; align-items: center; padding: 5px;
+    font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap; transition: color .15s; position: relative;
+  }
+  .action-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 5px;
+    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+  }
+  .action-item:hover::after { width: calc(100% - 10px); }
+  .action-item .ico      { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; background: none; border: none; cursor: pointer;
+    margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: transform .28s ease, opacity .28s ease; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav {
+    display: none; position: fixed; top: var(--header-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+    padding: 12px 24px 28px; z-index: 199; flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 12px 0; font-size: 17px; font-weight: 400; color: #000;
+    text-decoration: none; border-bottom: 1px solid #ebebeb; transition: color .15s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover, .mobile-nav a.active { color: var(--rot); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 13px; padding: 8px 20px;
+    font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 17px;
+    letter-spacing: -0.7px; text-decoration: none; cursor: pointer;
+    white-space: nowrap; border: 2px solid transparent;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .btn-red          { background: var(--rot); color: #fff; border-color: var(--rot); }
+  .btn-outline-dark { background: transparent; border-color: #424242; color: #3d3d3d; }
+  .btn-red:hover          { background: transparent; color: var(--rot); }
+  .btn-outline-dark:hover { background: #424242; color: #fff; }
+
+  /* ─── HERO ─── */
+  .konzept-hero {
+    background: linear-gradient(178deg, #fff 25%, #8487a2 98%);
+    overflow: hidden;
+  }
+  .konzept-hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    height: calc((100vh - var(--header-h) - 100px) * 0.77);
+    min-height: 500px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .konzept-hero-left {
+    padding: 60px var(--pad);
+    display: flex; flex-direction: column; gap: 20px;
+    justify-content: center;
+  }
+  .konzept-hero-tag {
+    font-weight: 300; font-size: 22px; color: var(--rot);
+    letter-spacing: -0.75px;
+  }
+  .konzept-hero-title {
+    font-weight: 700; font-size: 88px; color: #000;
+    letter-spacing: -5.4px; line-height: 1.0;
+  }
+  .konzept-hero-body {
+    font-weight: 300; font-size: 18px; color: #000;
+    line-height: 1.6;
+  }
+  .konzept-hero-right {
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .konzept-hero-img {
+    width: 100%; height: auto;
+    display: block; opacity: 0.9;
+  }
+
+  /* ─── GANZHEITLICH SECTION ─── */
+  .ganz-section {
+    max-width: 1280px; margin: 0 auto;
+    padding: 100px var(--pad);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .ganz-img-col { position: relative; }
+  .ganz-img {
+    width: 100%; max-height: 560px;
+    object-fit: contain; display: block;
+  }
+  .ganz-badge {
+    position: absolute;
+    background: rgba(228,233,233,0.85);
+    border: 1.5px solid #000;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 500; font-size: 16px; color: #000;
+    white-space: nowrap;
+  }
+  .badge-fassung { top: 13%; left: 68%; }
+  .badge-glaeser { top: 35%; left: 38%; }
+  .badge-design  { top: 73%; left: 70%; }
+  .ganz-text-col { display: flex; flex-direction: column; gap: 20px; }
+  .ganz-title {
+    font-weight: 700; font-size: 40px; letter-spacing: -2.4px;
+    color: #000; line-height: 1.1;
+  }
+  .ganz-body {
+    font-weight: 300; font-size: 18px; color: #000; line-height: 1.6;
+  }
+  .ganz-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ─── DIREKT SECTION ─── */
+  .direkt-outer {
+    padding: 0 var(--pad) 100px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .direkt-card {
+    background: linear-gradient(to bottom, #ede5d8, #f0ede7);
+    border-radius: 15px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; overflow: hidden;
+    min-height: 540px;
+  }
+  .direkt-left {
+    padding: 52px 48px;
+    display: flex; flex-direction: column; gap: 20px;
+    justify-content: center;
+  }
+  .direkt-title {
+    font-weight: 700; font-size: 40px; letter-spacing: -2.4px;
+    color: #000; line-height: 1.2;
+  }
+  .direkt-body {
+    font-weight: 300; font-size: 18px; color: #000; line-height: 1.6;
+    flex: 1;
+  }
+  .direkt-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .direkt-right { overflow: hidden; }
+  .direkt-img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+  }
+
+  .section-heading {
+    font-weight: 700; font-size: 45px; letter-spacing: -2px;
+    color: #000; text-align: center;
+    padding: 100px var(--pad) 60px;
+    max-width: 1280px; margin: 0 auto;
+  }
+
+  /* ─── QUOTES ─── */
+  .quotes-heading {
+    font-weight: 700; font-size: 70px; letter-spacing: -4.2px;
+    color: #000; text-align: center;
+    padding: 100px var(--pad) 60px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .quotes-outer {
+    position: relative; overflow: hidden;
+    padding: 0 0 175px;
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+  .q-blur-left, .q-blur-right {
+    position: absolute; top: 0; bottom: 0; width: 18%;
+    z-index: 5; pointer-events: none;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .q-blur-left {
+    left: 0;
+    mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  }
+  .q-blur-right {
+    right: 0;
+    mask-image: linear-gradient(to left, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
+  }
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .q-track {
+    display: flex; width: max-content;
+    animation: marquee 28s linear infinite; gap: 16px;
+  }
+  .q-slide {
+    flex-shrink: 0; width: 520px;
+    background: #C9C5BE; border-radius: 15px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; padding: 40px 36px; min-height: 210px;
+    transition: transform .3s ease;
+  }
+  .q-slide:hover { transform: scale(1.01); }
+  .q-slide-text {
+    font-weight: 700; font-size: 29px; line-height: 1.09;
+    color: #fff; letter-spacing: -1.5px; text-align: center;
+    transition: color .3s ease;
+  }
+  .q-slide:hover .q-slide-text { color: #333; }
+  .q-slide-stars { display: none; }
+  .q-slide-author {
+    font-weight: 400; font-size: 18px;
+    color: #fff; letter-spacing: -0.5px; text-align: center;
+    transition: color .3s ease;
+  }
+  .q-slide:hover .q-slide-author { color: #555; }
+
+  /* ─── CTA SECTION ─── */
+  .konzept-cta {
+    background: linear-gradient(to top, #f0e7e3 0%, #fff 40%);
+    padding: 100px var(--pad) 125px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 24px;
+  }
+  .konzept-cta-title {
+    font-weight: 700; font-size: 75px; letter-spacing: -4.5px;
+    color: #000; line-height: 1.0;
+  }
+  .konzept-cta-body {
+    font-weight: 300; font-size: 18px; color: #000;
+    line-height: 1.6; max-width: 480px;
+  }
+  .konzept-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+  /* ─── FOOTER ─── */
+  .footer { background: rgba(12,12,12,0.9); padding: 86px var(--pad); }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
+  .footer-col  { display: flex; flex-direction: column; }
+  .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
+  .footer-col-l {
+    font-weight: 300; font-size: 15px; line-height: 2;
+    color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
+    position: relative; width: fit-content;
+  }
+  .footer-col-l::after {
+    content: ''; position: absolute; bottom: 4px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease;
+  }
+  .footer-col-l:hover::after { width: 100%; }
+  .copyright { background: rgba(12,12,12,0.9); border-top: 1px solid #2a2a2a; padding: 14px var(--pad); }
+  .copyright-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff;
+  }
+  .copyright-inner a { color: #fff; text-decoration: none; position: relative; }
+  .copyright-inner a::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease;
+  }
+  .copyright-inner a:hover::after { width: 100%; }
+
+  /* ═══ BREAKPOINTS ═══ */
+  @media (max-width: 1279px) {
+    :root { --pad: 32px; }
+    .konzept-hero-title { font-size: 70px; }
+    .quotes-heading { font-size: 56px; }
+  }
+  @media (max-width: 767px) {
+    :root { --header-h: 62px; --pad: 20px; }
+    .nav, .header-actions { display: none; }
+    .hamburger { display: flex; }
+    .konzept-hero { grid-template-columns: 1fr; min-height: auto; }
+    .konzept-hero-right { display: none; }
+    .konzept-hero-left { max-width: 100%; padding: 48px var(--pad); }
+    .konzept-hero-title { font-size: 52px; letter-spacing: -3px; }
+    .ganz-section { grid-template-columns: 1fr; }
+    .direkt-card { grid-template-columns: 1fr; }
+    .direkt-right { height: 260px; }
+    .quotes-heading { font-size: 40px; letter-spacing: -2px; }
+    .konzept-cta-title { font-size: 48px; letter-spacing: -3px; }
+    .footer { padding: 28px var(--pad); }
+    .footer-logo { display: none; }
+    .footer-cols  { gap: 16px; margin-left: 0; }
+    .footer-col   { width: calc(50% - 8px); }
+  }
+
+  /* Page transition */
+  .page-content { opacity: 0; }
+  .page-content.page-ready   { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo-link">
+      <img class="header-logo" src="assets/logo.png" alt="BASE Eyewear">
+    </a>
+    <nav class="nav">
+      <a href="konzept.html"        class="nav-item active">KONZEPT</a>
+      <a href="kollektionen.html"   class="nav-item">KOLLEKTIONEN</a>
+      <a href="kollektionen.html"   class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"          class="nav-item">ÜBER</a>
+      <a href="index.html"          class="nav-item">SERVICE</a>
+      <a href="index.html#cta"      class="nav-item">PARTNER</a>
+    </nav>
+    <div class="header-actions">
+      <a href="index.html" class="action-item">
+        <img class="ico" src="assets/vector-search.svg" alt="">OPTIKER-SUCHE
+      </a>
+      <a href="index.html" class="action-item">
+        <img class="ico-user" src="assets/user-icon.svg" alt="">LOGIN
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="konzept.html" class="active">KONZEPT</a>
+  <a href="kollektionen.html">KOLLEKTIONEN</a>
+  <a href="kollektionen.html">FASSUNGEN</a>
+  <a href="index.html">GLÄSER</a>
+  <a href="index.html">KOMPLETTBRILLE</a>
+  <a href="index.html">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
+  <a href="index.html#cta">PARTNER</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
+</nav>
+
+<main class="page-content">
+
+<!-- ════════════════════════════════
+     HERO
+═════════════════════════════════ -->
+<section class="konzept-hero">
+  <div class="konzept-hero-inner">
+    <div class="konzept-hero-left">
+      <p class="konzept-hero-tag">UNSER KONZEPT</p>
+      <h1 class="konzept-hero-title">DIE OPTIKER-MARKE</h1>
+      <p class="konzept-hero-body">
+        Jede Brille ist genauso individuell wie ihre Träger:innen. Alles muss stimmen – Rahmenform, Material, Farbe und nicht zuletzt die Gläser. Um wirklich „seine Brille" zu finden, braucht es deshalb gute Beratung. Beratung von Optikern, die im wahrsten Sinne Meister ihres Fachs sind. Unser Anspruch ist es, diesen Profis alles an die Hand zu geben, damit Kunden am Ende sagen: „Das ist meine Brille."
+      </p>
+    </div>
+    <div class="konzept-hero-right">
+      <img class="konzept-hero-img"
+           src="assets/konzept-hero.png"
+           alt="Optiker mit Brille"
+           fetchpriority="high" loading="eager" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     GANZHEITLICH BETRACHTET
+═════════════════════════════════ -->
+<section class="ganz-section">
+  <div class="ganz-img-col">
+    <img class="ganz-img"
+         src="https://www.figma.com/api/mcp/asset/c8255733-8ed9-4489-9945-d2a2f8df1ca1"
+         alt="BASE Eyewear Fassung mit Bezeichnungen">
+    <span class="ganz-badge badge-fassung">FASSUNG</span>
+    <span class="ganz-badge badge-glaeser">GLÄSER</span>
+    <span class="ganz-badge badge-design">DESIGN</span>
+  </div>
+  <div class="ganz-text-col">
+    <h2 class="ganz-title">GANZHEITLICH BETRACHTET.</h2>
+    <p class="ganz-body">
+      Um sicherzustellen, dass jede unserer Brillen diesen Anspruch erfüllen kann, mussten wir denken wie ein Optiker: Jedes Teil der Brille muss aufeinander abgestimmt sein und höchsten Qualitätsstandards gerecht werden. Um das zu erreichen war für uns klar: wir liefern alles aus einer Hand, vom Design, über die Fassung bis hin zu den Gläsern.
+    </p>
+    <div class="ganz-btns">
+      <a href="kollektionen.html" class="btn btn-red">ZU DEN KOLLEKTIONEN</a>
+      <a href="index.html" class="btn btn-outline-dark">ZUM GLAS-PROGRAMM</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     DIREKT UND VERBINDLICH
+═════════════════════════════════ -->
+<section class="direkt-outer">
+  <div class="direkt-card">
+    <div class="direkt-left">
+      <h2 class="direkt-title">DIREKT UND VERBINDLICH.<br>FÜR SIE UND IHRE KUNDEN.</h2>
+      <p class="direkt-body">
+        Wir kennen die Optiker-Branche seit mehr als 30 Jahren und wissen, wie anspruchsvoll das Geschäft sein kann. Daher unterstützen wir Sie genauso, wie Sie es brauchen. Ob nur unsere Fassungen ohne Gläser, nur die Gläser oder das Rund-um-Sorglos-Paket mit „Brille-Komplett". Alles ist möglich. Und alles ohne nervige Zwischenhändler.<br><br>
+        Und wenn Sie noch mehr Zeit für Ihre Kunden möchten, dann stellen wir Ihnen gerne unser Best-Preis-Optik-Konzept vor – ein Kundensystem, das Ihnen alles abnimmt, was nichts mit dem Optiker-Handwerk zu tun hat. Vom Bestellsystem über Kundenpflege bis zu Marketingmaßnahmen – hier wird alles abgedeckt.
+      </p>
+      <div class="direkt-btns">
+        <a href="index.html" class="btn btn-red">ZU BRILLE KOMPLETT</a>
+        <a href="index.html" class="btn btn-outline-dark">ZU BEST-PREIS-OPTIK</a>
+      </div>
+    </div>
+    <div class="direkt-right">
+      <img class="direkt-img"
+           src="https://www.figma.com/api/mcp/asset/6bbabf07-d8e5-49ca-9456-e91bba9e3449"
+           alt="Optiker-Schaufenster">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     QUOTES
+═════════════════════════════════ -->
+<section>
+  <h2 class="section-heading">ÜBER 1.800 OPTIKER VERTRAUEN UNS.</h2>
+  <div class="quotes-outer">
+    <div class="q-blur-left"></div>
+    <div class="q-blur-right"></div>
+    <div class="q-track" id="qTrack">
+      <div class="q-slide">
+        <div class="q-slide-text">»EIN UNSCHLAGBARES ANGEBOT«</div>
+        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+        <div class="q-slide-author">Johannes Metzger, Inhaber „Optik Metzger", Balingen</div>
+      </div>
+      <div class="q-slide">
+        <div class="q-slide-text">»SEIT JAHREN EIN VERLÄSSLICHER PARTNER«</div>
+        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+        <div class="q-slide-author">Marion Huber, Geschäftsführerin „Optik Huber", Stuttgart</div>
+      </div>
+      <div class="q-slide">
+        <div class="q-slide-text">»DIE BESTE ENTSCHEIDUNG FÜR UNSER GESCHÄFT«</div>
+        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+        <div class="q-slide-author">Thomas Klein, Inhaber „Augenoptik Klein", Freiburg</div>
+      </div>
+      <div class="q-slide">
+        <div class="q-slide-text">»QUALITÄT, DIE MAN SIEHT UND SPÜRT«</div>
+        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+        <div class="q-slide-author">Sandra Müller, Geschäftsführerin „Optik am Markt", Ulm</div>
+      </div>
+      <div class="q-slide">
+        <div class="q-slide-text">»UNSER UMSATZ HAT SICH VERDOPPELT«</div>
+        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+        <div class="q-slide-author">Peter Bauer, Inhaber „Brillenhaus Bauer", Karlsruhe</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CTA
+═════════════════════════════════ -->
+<section class="konzept-cta">
+  <h2 class="konzept-cta-title">INTERESSIERT?</h2>
+  <p class="konzept-cta-body">
+    Sie sind Optiker und möchten Produkte von BASE Eyewear in Ihrem Geschäft führen? Sprechen Sie mit dem Gebietsleiter Ihrer Region.
+  </p>
+  <div class="konzept-cta-btns">
+    <a href="index.html" class="btn btn-red">INFO-CALL VEREINBAREN</a>
+    <a href="index.html" class="btn btn-outline-dark">MUSTER-KOLLEKTION ANFRAGEN</a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+═════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-h">SORTIMENT</span>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
+        <a class="footer-col-l">Gläser</a>
+        <a class="footer-col-l">Komplettbrillen</a>
+        <a class="footer-col-l">Sonnenbrillen</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KOLLEKTIONEN</span>
+        <a class="footer-col-l">B1</a>
+        <a class="footer-col-l">BE</a>
+        <a href="masca.html" class="footer-col-l">MASCA</a>
+        <a class="footer-col-l">DIFERRO</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">PARTNER</span>
+        <a class="footer-col-l">Konzept</a>
+        <a class="footer-col-l">BPO-System</a>
+        <a class="footer-col-l">Partner werden</a>
+        <a class="footer-col-l">Partner-Login</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">ÜBER</span>
+        <a class="footer-col-l">Designhaus</a>
+        <a class="footer-col-l">Unternehmen</a>
+        <a class="footer-col-l">Karriere</a>
+        <a class="footer-col-l">Presse</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KONTAKT</span>
+        <a class="footer-col-l">Zentrale</a>
+        <a class="footer-col-l">Service</a>
+        <a class="footer-col-l">Newsletter</a>
+        <a class="footer-col-l">Downloads</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="copyright">
+  <div class="copyright-inner">
+    <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
+    <span>DE | EN</span>
+  </div>
+</div>
+
+</main>
+
+<script>
+  /* Hamburger */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', function () {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+  document.querySelectorAll('.mobile-nav a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  /* Quotes marquee — clone slides for seamless loop */
+  (function () {
+    const track = document.getElementById('qTrack');
+    [...track.querySelectorAll('.q-slide')].forEach(function (s) {
+      track.appendChild(s.cloneNode(true));
+    });
+  })();
+
+  /* Page transitions */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () { pageContent.classList.add('page-ready'); });
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+</script>
+
+</body>
+</html>

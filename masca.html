@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASCA – BASE Eyewear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Figma Variables ── */
+  :root {
+    --dunkelblau:       #295C83;
+    --sand:             #EDE5D8;
+    --hell-blau:        #E4E9E9;
+    --dunkel-gruen:     #5E6456;
+    --beige:            #FFF8EE;
+    --ultra-light-grey: #FBFBFB;
+    --rot:              #9f1918;
+    --dark-nav:         #425050;
+    --grey-footer:      #d9d9d9;
+    --header-h:         80px;
+    --pad:              44px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html  { scroll-behavior: smooth; }
+  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: sticky; top: 0; z-index: 200;
+    width: 100%; height: var(--header-h);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 var(--pad); height: 100%;
+    display: flex; align-items: center; gap: 36px;
+  }
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
+
+  .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+  .nav-item {
+    padding: 5px 9px;
+    font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s; position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 9px;
+    width: 0; height: 1.5px; background: #fff;
+    transition: width .3s ease;
+  }
+  .nav-item:hover::after { width: calc(100% - 18px); }
+  .nav-item.active::after { width: calc(100% - 18px); }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .action-item {
+    display: flex; gap: 5px; align-items: center;
+    padding: 5px; font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s; position: relative;
+  }
+  .action-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 5px;
+    width: 0; height: 1.5px; background: #fff;
+    transition: width .3s ease;
+  }
+  .action-item:hover::after { width: calc(100% - 10px); }
+  .action-item .ico      { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px;
+    background: none; border: none; cursor: pointer; margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px; background: #fff;
+    transition: transform .28s ease, opacity .28s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav */
+  .mobile-nav {
+    display: none; position: fixed;
+    top: var(--header-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+    padding: 12px 24px 28px; z-index: 199;
+    flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 12px 0; font-size: 17px; font-weight: 400;
+    color: #000; text-decoration: none;
+    border-bottom: 1px solid #ebebeb; transition: color .15s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover { color: var(--rot); }
+  .mobile-nav a.active { color: var(--rot); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 13px; padding: 8px 20px;
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 17px; letter-spacing: -0.7px;
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .btn-red          { background: var(--rot);  color: #fff; border: 2px solid var(--rot); }
+  .btn-outline-dark { background: transparent; border: 2px solid #424242; color: #3d3d3d; }
+  .btn-red:hover          { background: transparent; border-color: var(--rot); color: var(--rot); }
+  .btn-outline-dark:hover { background: #424242; border-color: #424242; color: #fff; }
+
+  /* ─── HERO ─── */
+  .masca-hero {
+    background: linear-gradient(to bottom, #fff 0%, #efebfc 100%);
+    overflow: hidden;
+  }
+  .masca-hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: stretch; min-height: 480px;
+  }
+  .masca-hero-left {
+    display: flex; flex-direction: column; gap: 24px;
+    padding: 66px var(--pad) 60px;
+    justify-content: center;
+  }
+  .masca-hero-logo { height: 68px; width: auto; max-width: 340px; object-fit: contain; }
+  .masca-hero-body {
+    font-weight: 300; font-size: 18px;
+    color: #000; line-height: 1.6;
+  }
+
+  /* Toggle switch */
+  .masca-toggle {
+    display: inline-flex; align-items: center; gap: 12px;
+    border: 1.5px solid #413f3c; border-radius: 32px;
+    padding: 7px 18px 7px 8px;
+    cursor: pointer; width: fit-content;
+    font-family: 'Oswald', sans-serif; font-weight: 300;
+    font-size: 16px; color: #413f3c; letter-spacing: -0.6px;
+    user-select: none;
+  }
+  .masca-toggle-input { display: none; }
+  .masca-toggle-track {
+    width: 44px; height: 24px; border-radius: 12px;
+    background: #c0c0c0; flex-shrink: 0; position: relative;
+    transition: background .25s;
+  }
+  .masca-toggle-input:checked ~ .masca-toggle-track { background: var(--rot); }
+  .masca-toggle-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; transition: transform .25s;
+  }
+  .masca-toggle-input:checked ~ .masca-toggle-track .masca-toggle-thumb {
+    transform: translateX(20px);
+  }
+
+  .masca-hero-right {
+    overflow: hidden;
+  }
+  .masca-hero-img {
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: center;
+    display: block;
+    transform: scale(1.25);
+  }
+
+  /* ─── PRODUCTS SECTION ─── */
+  .masca-section {
+    max-width: 1280px; margin: 0 auto;
+    padding: 48px var(--pad) 60px;
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 48px;
+  }
+
+  /* Filter sidebar — sticky */
+  .masca-filter-col { /* stretches to full grid row height, gives sticky room to move */ }
+  .masca-filter {
+    padding: 4px 10px 0;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+  .filter-group { margin-bottom: 18px; }
+  .filter-group-title {
+    font-weight: 700; font-size: 13px; color: #000;
+    letter-spacing: 0; margin-bottom: 4px;
+  }
+  .filter-list { list-style: none; }
+  .filter-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 300; font-size: 13px; color: #5b5b5b;
+    padding: 2px 8px; margin: 1px 0;
+    border: 1.5px solid transparent; border-radius: 20px;
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+  }
+  .filter-list li:hover { color: #333; border-color: #c8c8c8; }
+  .filter-list li.active {
+    color: var(--rot);
+    border-color: var(--rot);
+    font-weight: 400;
+  }
+  .filter-list li.active .filter-count { color: var(--rot); }
+  .filter-count { font-size: 11px; color: rgba(91,91,91,0.7); margin-left: 8px; transition: color .2s; }
+
+  /* Product grid */
+  .masca-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-self: start;
+  }
+
+  .masca-card {
+    border-radius: 15px; overflow: hidden;
+    background: linear-gradient(to top, #e2e2e2 0%, #f9f9f9 94%);
+    display: flex; flex-direction: column;
+    align-items: center;
+    cursor: pointer; position: relative;
+    transition: transform .3s ease, opacity .25s ease;
+  }
+  .masca-card:hover { transform: scale(1.02); }
+
+  .masca-card-img-wrap {
+    width: 100%; padding: 12px 12px 0;
+    position: relative;
+  }
+  .masca-card-img-bg {
+    background: #fff; border-radius: 10px;
+    width: 100%; aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .masca-card-img {
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: center;
+    padding: 12px;
+    transition: transform .3s ease;
+  }
+  .masca-card:hover .masca-card-img { transform: scale(1.10); }
+
+  .masca-card-info {
+    padding: 14px 16px 20px;
+    text-align: center; width: 100%;
+  }
+  .masca-card-model {
+    font-weight: 700; font-size: 17px;
+    color: #413f3c; letter-spacing: -0.3px;
+    display: inline-block; margin-bottom: 2px;
+    position: relative;
+  }
+  .masca-card-model::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot);
+    transition: width .3s ease;
+  }
+  .masca-card:hover .masca-card-model::after { width: 100%; }
+  .masca-card-desc {
+    font-weight: 300; font-size: 14px;
+    color: #413f3c;
+  }
+
+  /* NEU Badge */
+  .masca-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--rot); color: #fff;
+    font-weight: 700; font-size: 14px;
+    padding: 4px 10px; border-radius: 15px;
+    line-height: 1.4; z-index: 2;
+  }
+
+  /* ─── PAGINATION ─── */
+  .masca-pagination-wrap {
+    max-width: 1280px; margin: 0 auto;
+    padding: 48px var(--pad) 96px;
+    padding-left: calc(var(--pad) + 200px + 48px);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .masca-pag-btns { display: flex; gap: 10px; align-items: center; }
+  .masca-pag-btn {
+    width: 39px; height: 39px; border-radius: 50%;
+    border: 1.5px solid #5b5b5b;
+    background: none; cursor: pointer;
+    font-family: 'Oswald', sans-serif; font-weight: 300;
+    font-size: 17px; color: #5b5b5b;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .masca-pag-btn:hover { background: #5b5b5b; color: #fff; }
+  .masca-pag-btn.active {
+    background: #413f3c; border-color: #413f3c;
+    color: #fff; font-weight: 700;
+  }
+  .masca-pag-count {
+    font-weight: 300; font-size: 14px; color: #5b5b5b;
+  }
+
+  /* ─── CTA ─── */
+  .masca-cta {
+    background: linear-gradient(to bottom, #f0e7e3 0%, #fff 100%);
+    padding: 80px var(--pad) 120px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 28px; text-align: center;
+  }
+  .masca-cta-title {
+    font-weight: 700; font-size: 72px;
+    color: #000; letter-spacing: -4px;
+  }
+  .masca-cta-body {
+    font-weight: 300; font-size: 18px;
+    color: #000; line-height: 1.6; max-width: 520px;
+  }
+  .masca-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+  /* ─── FOOTER ─── */
+  .footer { background: rgba(12,12,12,0.9); padding: 86px var(--pad); }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
+  .footer-col  { display: flex; flex-direction: column; }
+  .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
+  .footer-col-l {
+    font-weight: 300; font-size: 15px; line-height: 2;
+    color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
+    position: relative; width: fit-content;
+  }
+  .footer-col-l::after {
+    content: ''; position: absolute; bottom: 4px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot);
+    transition: width .3s ease;
+  }
+  .footer-col-l:hover::after { width: 100%; }
+
+  .copyright { background: rgba(12,12,12,0.9); border-top: 1px solid #2a2a2a; padding: 14px var(--pad); }
+  .copyright-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff;
+  }
+  .copyright-inner a {
+    color: #fff; text-decoration: none; transition: color .15s; position: relative;
+  }
+  .copyright-inner a::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot);
+    transition: width .3s ease;
+  }
+  .copyright-inner a:hover::after { width: 100%; }
+
+  /* ═══ BREAKPOINTS ═══ */
+  @media (max-width: 1279px) {
+    :root { --pad: 32px; }
+    .nav-item    { font-size: 13px; padding: 4px 7px; }
+    .action-item { font-size: 13px; }
+
+    .masca-hero-inner { grid-template-columns: 380px 1fr; }
+    .masca-hero-logo  { height: 52px; }
+    .masca-hero-body  { font-size: 16px; }
+
+    .masca-section { grid-template-columns: 170px 1fr; gap: 32px; }
+    .masca-pagination-wrap { padding-left: calc(var(--pad) + 170px + 32px); }
+
+    .masca-cta-title { font-size: 56px; letter-spacing: -3px; }
+  }
+
+  @media (max-width: 767px) {
+    :root { --header-h: 62px; --pad: 20px; }
+
+    .nav, .header-actions { display: none; }
+    .hamburger { display: flex; }
+    .header-inner { gap: 0; }
+    .header-logo { height: 28px; }
+    .header-logo-link { flex-shrink: 0; }
+
+    .masca-hero { padding: 32px var(--pad) 0; min-height: auto; }
+    .masca-hero-inner { grid-template-columns: 1fr; gap: 24px; padding-bottom: 0; }
+    .masca-hero-right { height: 240px; }
+    .masca-hero-logo  { height: 40px; }
+    .masca-hero-body  { font-size: 15px; }
+
+    .masca-section { grid-template-columns: 1fr; padding: 32px var(--pad) 40px; }
+    .masca-filter { display: none; }
+    .masca-grid   { grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .masca-pagination-wrap { padding-left: var(--pad); }
+
+    .masca-cta { padding: 56px var(--pad) 80px; margin-top: 24px; }
+    .masca-cta-title { font-size: 40px; letter-spacing: -2px; }
+    .masca-cta-body  { font-size: 16px; }
+    .masca-cta-btns .btn { font-size: 14px; padding: 8px 16px; }
+
+    .footer { padding: 28px var(--pad); }
+    .footer-logo { display: none; }
+    .footer-inner { gap: 20px; }
+    .footer-cols  { gap: 16px; margin-left: 0; }
+    .footer-col   { width: calc(50% - 8px); }
+    .copyright    { padding: 12px var(--pad); }
+    .copyright-inner { gap: 14px; font-size: 13px; }
+  }
+
+  /* Page transition */
+  .page-content { opacity: 0; }
+  .page-content.page-ready   { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
+
+    <nav class="nav">
+      <a href="konzept.html"         class="nav-item">KONZEPT</a>
+      <a href="kollektionen.html"  class="nav-item active">KOLLEKTIONEN</a>
+      <a href="kollektionen.html" class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"          class="nav-item">ÜBER</a>
+      <a href="index.html"          class="nav-item">SERVICE</a>
+      <a href="index.html#cta"      class="nav-item">PARTNER</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="index.html" class="action-item">
+        <img class="ico" src="assets/vector-search.svg" alt="">OPTIKER-SUCHE
+      </a>
+      <a href="index.html" class="action-item">
+        <img class="ico-user" src="assets/user-icon.svg" alt="">LOGIN
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="konzept.html">KONZEPT</a>
+  <a href="kollektionen.html" class="active">KOLLEKTIONEN</a>
+  <a href="kollektionen.html">FASSUNGEN</a>
+  <a href="index.html">GLÄSER</a>
+  <a href="index.html">KOMPLETTBRILLE</a>
+  <a href="index.html">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
+  <a href="index.html#cta">PARTNER</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
+</nav>
+
+<main class="page-content">
+
+<!-- ═══ HERO ═══ -->
+<section class="masca-hero">
+  <div class="masca-hero-inner">
+    <div class="masca-hero-left">
+      <img class="masca-hero-logo" src="assets/MASCA-nav.svg" alt="MASCA">
+      <p class="masca-hero-body">
+        Designt im BASE Designhaus in Rechberghausen. Klare Linienführung,
+        charakterstarke Materialkombinationen und durchdachte Geometrie.
+        Eine starke Designsignatur für das moderne Augenoptiker-Sortiment.
+      </p>
+      <label class="masca-toggle">
+        <input type="checkbox" class="masca-toggle-input" id="neuToggle">
+        <span class="masca-toggle-track"><span class="masca-toggle-thumb"></span></span>
+        NUR NEUHEITEN
+      </label>
+    </div>
+    <div class="masca-hero-right">
+      <img class="masca-hero-img" src="assets/masca-p7.png" alt="MASCA Kollektion">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRODUCTS ═══ -->
+<div class="masca-section">
+
+  <!-- Filter Sidebar -->
+  <div class="masca-filter-col">
+  <aside class="masca-filter">
+    <div class="filter-group">
+      <p class="filter-group-title">RAHMENFORM</p>
+      <ul class="filter-list">
+        <li class="active" data-filter-all="true">Alle <span class="filter-count">47</span></li>
+        <li>Square/Rectangle <span class="filter-count">14</span></li>
+        <li>Round <span class="filter-count">9</span></li>
+        <li>Oktagon <span class="filter-count">6</span></li>
+        <li>Cat-Eye <span class="filter-count">5</span></li>
+        <li>Panto <span class="filter-count">7</span></li>
+        <li>Aviator <span class="filter-count">4</span></li>
+        <li>Browline <span class="filter-count">2</span></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <p class="filter-group-title">RAHMENTYP</p>
+      <ul class="filter-list">
+        <li>Vollrand <span class="filter-count">28</span></li>
+        <li>Halbrand <span class="filter-count">12</span></li>
+        <li>Randlos <span class="filter-count">7</span></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <p class="filter-group-title">MATERIAL</p>
+      <ul class="filter-list">
+        <li>Edelstahl <span class="filter-count">19</span></li>
+        <li>Acetat <span class="filter-count">14</span></li>
+        <li>Titan <span class="filter-count">8</span></li>
+        <li>Kombination <span class="filter-count">6</span></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <p class="filter-group-title">FARBE</p>
+      <ul class="filter-list">
+        <li>Schwarz <span class="filter-count">12</span></li>
+        <li>Gold <span class="filter-count">9</span></li>
+        <li>Crystal <span class="filter-count">7</span></li>
+        <li>Graphit <span class="filter-count">6</span></li>
+        <li>Havana <span class="filter-count">5</span></li>
+        <li>Burgunder <span class="filter-count">4</span></li>
+        <li>Bunt <span class="filter-count">4</span></li>
+      </ul>
+    </div>
+  </aside>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="masca-grid">
+
+    <div class="masca-card" data-neu="true">
+      <span class="masca-badge">NEU</span>
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p1.png" alt="MA4970">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA4970</span>
+        <span class="masca-card-desc">Square | Schwarz matt / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p2.png" alt="MA4940">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA4940</span>
+        <span class="masca-card-desc">Round | Graphit / Crystal</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p3.png" alt="MA5030">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5030</span>
+        <span class="masca-card-desc">Panto | Havana / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p4.png" alt="MA4980">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA4980</span>
+        <span class="masca-card-desc">Cat-Eye | Crystal / Rosé</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p5.png" alt="MA5010">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5010</span>
+        <span class="masca-card-desc">Aviator | Silber / Grau</span>
+      </div>
+    </div>
+
+    <div class="masca-card" data-neu="true">
+      <span class="masca-badge">NEU</span>
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p6.png" alt="MA5040">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5040</span>
+        <span class="masca-card-desc">Oktagon | Schwarz / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card" data-neu="true">
+      <span class="masca-badge">NEU</span>
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p7.png" alt="MA5050">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5050</span>
+        <span class="masca-card-desc">Oktagon | Crystal / Violett</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p8.png" alt="MA4960">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA4960</span>
+        <span class="masca-card-desc">Round | Burgunder / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p9.png" alt="MA4950">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA4950</span>
+        <span class="masca-card-desc">Browline | Schwarz matt</span>
+      </div>
+    </div>
+
+    <div class="masca-card" data-neu="true">
+      <span class="masca-badge">NEU</span>
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p1.png" alt="MA5060">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5060</span>
+        <span class="masca-card-desc">Square | Schwarz matt / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p3.png" alt="MA5070">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5070</span>
+        <span class="masca-card-desc">Panto | Crystal / Rosé</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p5.png" alt="MA5080">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5080</span>
+        <span class="masca-card-desc">Aviator | Gold / Grau</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p2.png" alt="MA5090">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5090</span>
+        <span class="masca-card-desc">Round | Havana / Gold</span>
+      </div>
+    </div>
+
+    <div class="masca-card" data-neu="true">
+      <span class="masca-badge">NEU</span>
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p7.png" alt="MA5100">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5100</span>
+        <span class="masca-card-desc">Oktagon | Graphit / Silber</span>
+      </div>
+    </div>
+
+    <div class="masca-card">
+      <div class="masca-card-img-wrap">
+        <div class="masca-card-img-bg">
+          <img class="masca-card-img" src="assets/masca-p4.png" alt="MA5110">
+        </div>
+      </div>
+      <div class="masca-card-info">
+        <span class="masca-card-model">MA5110</span>
+        <span class="masca-card-desc">Cat-Eye | Burgunder / Gold</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Pagination -->
+<div class="masca-pagination-wrap">
+  <div class="masca-pag-btns">
+    <button class="masca-pag-btn active">1</button>
+    <button class="masca-pag-btn">2</button>
+    <button class="masca-pag-btn">3</button>
+    <button class="masca-pag-btn">4</button>
+  </div>
+  <p class="masca-pag-count">Seite 1 von 4 | Zeige 12 von 47 Modellen</p>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="masca-cta">
+  <h2 class="masca-cta-title">SCHAUT GUT AUS?</h2>
+  <p class="masca-cta-body">
+    Sie sind Augenoptiker und möchten die MASCA Kollektion in Ihrem Geschäft führen?
+    Sprechen Sie mit dem Gebietsleiter Ihrer Region.
+  </p>
+  <div class="masca-cta-btns">
+    <a href="index.html" class="btn btn-red">INFO-CALL VEREINBAREN</a>
+    <a href="index.html" class="btn btn-outline-dark">MUSTER-KOLLEKTION ANFRAGEN</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-h">SORTIMENT</span>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
+        <a class="footer-col-l">Gläser</a>
+        <a class="footer-col-l">Komplettbrillen</a>
+        <a class="footer-col-l">Sonnenbrillen</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KOLLEKTIONEN</span>
+        <a class="footer-col-l">B1</a>
+        <a class="footer-col-l">BE</a>
+        <a class="footer-col-l">MASCA</a>
+        <a class="footer-col-l">DIFERRO</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">PARTNER</span>
+        <a class="footer-col-l">Konzept</a>
+        <a class="footer-col-l">BPO-System</a>
+        <a class="footer-col-l">Partner werden</a>
+        <a class="footer-col-l">Partner-Login</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">ÜBER</span>
+        <a class="footer-col-l">Designhaus</a>
+        <a class="footer-col-l">Unternehmen</a>
+        <a class="footer-col-l">Karriere</a>
+        <a class="footer-col-l">Presse</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KONTAKT</span>
+        <a class="footer-col-l">Zentrale</a>
+        <a class="footer-col-l">Service</a>
+        <a class="footer-col-l">Newsletter</a>
+        <a class="footer-col-l">Downloads</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="copyright">
+  <div class="copyright-inner">
+    <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
+    <span>DE | EN</span>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+  /* Hamburger */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', function () {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+
+  /* NEU-Toggle filter */
+  var neuToggle = document.getElementById('neuToggle');
+  var mascaCards = document.querySelectorAll('.masca-card');
+  var neuLock = false;
+
+  neuToggle.addEventListener('change', function () {
+    if (neuLock) return;
+    neuLock = true;
+    var neuOnly = neuToggle.checked;
+
+    /* Step 1: fade all visible cards out */
+    mascaCards.forEach(function (card) {
+      if (card.style.display !== 'none') {
+        card.style.opacity = '0';
+        card.style.pointerEvents = 'none';
+      }
+    });
+
+    setTimeout(function () {
+      /* Step 2: show/hide, reset opacity */
+      mascaCards.forEach(function (card) {
+        var match = !neuOnly || card.dataset.neu === 'true';
+        if (match) {
+          card.style.display = '';
+          card.style.transition = 'none';
+          card.style.opacity = '0';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '';
+        }
+      });
+
+      /* Step 3: fade in matching cards */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          mascaCards.forEach(function (card) {
+            if (card.style.display !== 'none') {
+              card.style.transition = '';
+              card.style.opacity = '1';
+              card.style.pointerEvents = '';
+            }
+          });
+          neuLock = false;
+        });
+      });
+    }, 250);
+  });
+
+  /* Filter items */
+  document.querySelectorAll('.filter-list li').forEach(function (li) {
+    li.addEventListener('click', function () {
+      var list = li.closest('.filter-list');
+      var alleItem = list.querySelector('[data-filter-all]');
+
+      if (li.dataset.filterAll !== undefined) {
+        /* Clicking "Alle": activate only Alle, clear others */
+        list.querySelectorAll('li').forEach(function (i) { i.classList.remove('active'); });
+        li.classList.add('active');
+      } else {
+        /* Clicking any other: toggle it, deactivate Alle */
+        if (alleItem) alleItem.classList.remove('active');
+        li.classList.toggle('active');
+      }
+    });
+  });
+
+  /* Brillen-Kacheln → Detailseite */
+  document.querySelectorAll('.masca-card').forEach(function (card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a, button, label, input')) return;
+      window.location.href = 'detail.html';
+    });
+  });
+
+  /* Page transitions */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () {
+    pageContent.classList.add('page-ready');
+  });
+  pageContent.addEventListener('transitionend', function () {
+    if (!pageContent.classList.contains('page-leaving')) {
+      pageContent.style.opacity = '';
+      pageContent.style.transition = '';
+    }
+  });
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+</script>
+
+</body>
+</html>

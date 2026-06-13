@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kollektionen – BASE Eyewear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Figma Variables ── */
+  :root {
+    --dunkelblau:       #295C83;
+    --sand:             #EDE5D8;
+    --hell-blau:        #E4E9E9;
+    --dunkel-gruen:     #5E6456;
+    --beige:            #FFF8EE;
+    --ultra-light-grey: #FBFBFB;
+    --rot:              #9f1918;
+    --dark-nav:         #425050;
+    --grey-footer:      #d9d9d9;
+    --header-h:         80px;
+    --pad:              44px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html  { scroll-behavior: smooth; }
+  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+
+  /* ─────────────────────────────────────────────
+     HEADER
+  ───────────────────────────────────────────── */
+  .header {
+    position: sticky; top: 0; z-index: 200;
+    width: 100%; height: var(--header-h);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
+  }
+
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 var(--pad);
+    height: 100%;
+    display: flex; align-items: center; gap: 36px;
+  }
+
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
+
+  .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+  .nav-item {
+    padding: 5px 9px;
+    font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s;
+    position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 9px;
+    width: 0; height: 1.5px; background: #fff;
+    transition: width .3s ease;
+  }
+  .nav-item:hover::after { width: calc(100% - 18px); }
+  .nav-item.active::after { width: calc(100% - 18px); }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .action-item {
+    display: flex; gap: 5px; align-items: center;
+    padding: 5px; font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s;
+    position: relative;
+  }
+  .action-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 5px;
+    width: 0; height: 1.5px; background: #fff;
+    transition: width .3s ease;
+  }
+  .action-item:hover::after { width: calc(100% - 10px); }
+  .action-item .ico { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+
+  /* Hamburger button */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px;
+    background: none; border: none; cursor: pointer; margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px; background: #fff;
+    transition: transform .28s ease, opacity .28s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none; position: fixed;
+    top: var(--header-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(8px);
+    padding: 12px 24px 28px;
+    z-index: 199;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 12px 0; font-size: 17px; font-weight: 400;
+    color: #000; text-decoration: none;
+    border-bottom: 1px solid #ebebeb;
+    transition: color .15s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover { color: var(--rot); }
+  .mobile-nav a.active { color: var(--rot); }
+
+  /* ─────────────────────────────────────────────
+     BUTTONS
+  ───────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 13px; padding: 8px 20px;
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 17px; letter-spacing: -0.7px;
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+
+  .btn-red   { background: var(--rot);        color: #fff; border: 2px solid var(--rot); }
+  .btn-dark  { background: var(--dark-nav);   color: #fff; border: 2px solid transparent; }
+  .btn-blue  { background: var(--dunkelblau); color: #fff; border: 2px solid transparent; }
+  .btn-white { background: #fff;              color: #000; border: 1px solid transparent; }
+  .btn-outline-dark  { background: transparent; border: 2px solid #424242; color: #3d3d3d; }
+  .btn-outline-light { background: transparent; border: 1px solid #fff;    color: #fff; }
+
+  .btn-red:hover          { background: transparent; border-color: var(--rot);        color: var(--rot); }
+  .btn-dark:hover         { background: transparent; border-color: var(--dark-nav);   color: var(--dark-nav); }
+  .btn-blue:hover         { background: transparent; border-color: var(--dunkelblau); color: var(--dunkelblau); }
+  .btn-white:hover        { background: transparent; border-color: #fff;              color: #fff; }
+  .btn-outline-dark:hover  { background: #424242; border-color: #424242; color: #fff; }
+  .btn-outline-light:hover { background: #fff;    border-color: #fff;    color: #000; }
+
+  /* ─────────────────────────────────────────────
+     SECTION HEADING (shared)
+  ───────────────────────────────────────────── */
+  .section-heading {
+    font-weight: 700; font-size: 45px;
+    color: #000; letter-spacing: -2px;
+    text-align: center; padding: 48px var(--pad) 32px;
+    max-width: 1280px; margin: 0 auto;
+  }
+
+  /* ─────────────────────────────────────────────
+     KOLLEKTIONEN HERO
+  ───────────────────────────────────────────── */
+  .koll-hero {
+    background: linear-gradient(to bottom, #fff 0%, #F0EBE5 100%);
+    padding: 66px var(--pad) 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .koll-hero-content {
+    max-width: 860px; width: 100%;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  .koll-hero-tag {
+    font-weight: 300; font-size: 18px;
+    color: var(--rot); letter-spacing: -0.4px;
+    margin-bottom: 14px;
+  }
+
+  .koll-hero-title {
+    font-weight: 700; font-size: 90px;
+    color: #000; letter-spacing: -5px; line-height: 1.0;
+    margin-bottom: 28px;
+  }
+
+  .koll-hero-body {
+    font-weight: 300; font-size: 18px;
+    color: #000; line-height: 1.6; max-width: 680px;
+  }
+
+  /* Brand logos row */
+  .brand-logos {
+    margin-top: 56px;
+    width: 100%; max-width: 1100px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0;
+    border-top: 1px solid rgba(0,0,0,0.10);
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+    padding: 24px 0;
+    flex-wrap: nowrap; overflow: hidden;
+  }
+
+  .brand-logo-item {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 0 20px;
+    border-right: 1px solid rgba(0,0,0,0.10);
+  }
+  .brand-logo-item:last-child { border-right: none; }
+
+  .brand-logo-item img {
+    height: 34px; width: auto; max-width: 90px;
+    object-fit: contain;
+    filter: brightness(0);
+    opacity: 0.70;
+    transition: opacity .2s;
+  }
+  .brand-logo-item img[src*="B1-nav"],
+  .brand-logo-item img[src*="BE-nav"] { height: 24px; }
+  .brand-logo-item img[src*="MASCA-LITE"] { height: 43px; }
+
+  .koll-card-logo[src*="B1-nav"],
+  .koll-card-logo[src*="BE-nav"] { height: 31px; }
+  .koll-card-logo[src*="MASCA-LITE"] { height: 55px; }
+  .brand-logo-item:hover img { opacity: 1; }
+  .brand-logo-item a { display: flex; align-items: center; justify-content: center; line-height: 0; }
+
+  /* ─────────────────────────────────────────────
+     FILTER BUTTONS
+  ───────────────────────────────────────────── */
+  .koll-filters {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    padding: 0 var(--pad) 48px;
+  }
+
+  /* ─────────────────────────────────────────────
+     KOLLEKTIONEN GRID
+  ───────────────────────────────────────────── */
+  .koll-grid {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 var(--pad) 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+
+  .koll-card[id] { scroll-margin-top: calc(var(--header-h) + 24px); }
+
+  .koll-card {
+    border-radius: 15px; overflow: hidden;
+    background: linear-gradient(to bottom, #E2DDD8 0%, #ffffff 20%);
+    padding: 36px 36px 32px;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: transform .3s ease, opacity .25s ease;
+  }
+  .koll-card:hover { transform: scale(1.01); }
+
+  .koll-card-logo {
+    height: 44px; width: auto; max-width: 140px;
+    object-fit: contain;
+    filter: brightness(0);
+  }
+
+  .koll-card-product {
+    flex: 1; min-height: 0;
+    width: 90%; max-height: 220px;
+    object-fit: contain;
+  }
+
+  /* ─────────────────────────────────────────────
+     CTA SECTION
+  ───────────────────────────────────────────── */
+  .cta {
+    padding: 80px var(--pad) 160px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 32px;
+    text-align: center;
+  }
+  .cta-title {
+    font-weight: 700; font-size: 72px;
+    color: #000; letter-spacing: -4px;
+  }
+
+  /* ─────────────────────────────────────────────
+     FOOTER
+  ───────────────────────────────────────────── */
+  .footer {
+    background: rgba(12, 12, 12, 0.9);
+    padding: 86px var(--pad) 86px;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
+  .footer-col  { display: flex; flex-direction: column; }
+  .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
+  .footer-col-l {
+    font-weight: 300; font-size: 15px; line-height: 2;
+    color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
+    position: relative; width: fit-content;
+  }
+  .footer-col-l::after {
+    content: ''; position: absolute; bottom: 4px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot);
+    transition: width .3s ease;
+  }
+  .footer-col-l:hover::after { width: 100%; }
+
+  /* ─────────────────────────────────────────────
+     COPYRIGHT BAR
+  ───────────────────────────────────────────── */
+  .copyright {
+    background: rgba(12, 12, 12, 0.9);
+    border-top: 1px solid #2a2a2a;
+    padding: 14px var(--pad);
+  }
+  .copyright-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff;
+  }
+  .copyright-inner a {
+    color: #fff; text-decoration: none; transition: color .15s;
+    position: relative;
+  }
+  .copyright-inner a::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 0; height: 1.5px; background: var(--rot);
+    transition: width .3s ease;
+  }
+  .copyright-inner a:hover::after { width: 100%; }
+
+  /* ═════════════════════════════════════════════
+     BREAKPOINTS
+  ═════════════════════════════════════════════ */
+
+  /* ── Tablet  768–1279 px ── */
+  @media (max-width: 1279px) {
+    :root { --pad: 32px; }
+
+    .nav-item    { font-size: 13px; padding: 4px 7px; }
+    .action-item { font-size: 13px; }
+
+    .section-heading { font-size: 36px; letter-spacing: -1.5px; }
+
+    .koll-hero-tag   { font-size: 17px; }
+    .koll-hero-title { font-size: 68px; letter-spacing: -3.5px; }
+    .koll-hero-body  { font-size: 18px; }
+
+    .brand-logo-item img { height: 28px; }
+
+    .koll-grid       { gap: 24px; }
+    .koll-card       { padding: 28px 24px; gap: 16px; }
+    .koll-card-product { max-height: 180px; }
+
+    .cta-title { font-size: 56px; letter-spacing: -3px; }
+
+    .btn { font-size: 15px; }
+  }
+
+  /* ── Mobile  < 768 px ── */
+  @media (max-width: 767px) {
+    :root { --header-h: 62px; --pad: 20px; }
+
+    /* Header */
+    .nav, .header-actions { display: none; }
+    .hamburger { display: flex; }
+    .header-inner { gap: 0; }
+    .header-logo { height: 28px; }
+
+    /* Hero */
+    .koll-hero { padding: 20px var(--pad) 0; }
+    .koll-hero-tag   { font-size: 14px; }
+    .koll-hero-title { font-size: 46px; letter-spacing: -2.5px; }
+    .koll-hero-body  { font-size: 16px; }
+
+    /* Brand logos */
+    .brand-logos { gap: 0; margin-top: 36px; padding: 16px 0; overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
+    .brand-logo-item { flex: 0 0 auto; padding: 0 16px; }
+    .brand-logo-item img { height: 24px; }
+
+    /* Section headings */
+    .section-heading { font-size: 26px; letter-spacing: -1px; padding: 36px var(--pad) 24px; }
+
+    /* Filters */
+    .koll-filters { gap: 10px; padding: 0 var(--pad) 32px; }
+    .koll-filters .btn { font-size: 14px; padding: 7px 16px; }
+
+    /* Grid */
+    .koll-grid { grid-template-columns: 1fr; padding: 0 var(--pad) 48px; gap: 24px; }
+    .koll-card { padding: 28px 22px 24px; gap: 16px; }
+    .koll-card-product { max-height: 180px; }
+
+    /* CTA */
+    .cta { padding: 56px var(--pad); }
+    .cta-title { font-size: 40px; letter-spacing: -2px; }
+    .cta .btn { width: 100%; max-width: 340px; }
+
+    /* Buttons */
+    .btn { font-size: 15px; padding: 9px 20px; }
+
+    /* Footer */
+    .footer { padding: 28px var(--pad); }
+    .footer-logo { display: none; }
+    .footer-inner { gap: 20px; }
+    .footer-cols  { gap: 16px; margin-left: 0; }
+    .footer-col   { width: calc(50% - 8px); }
+
+    /* Copyright */
+    .copyright { padding: 12px var(--pad); }
+    .copyright-inner { gap: 14px; font-size: 13px; }
+  }
+
+  /* Page transition — only content fades, header stays */
+  .page-content { opacity: 0; }
+  .page-content.page-ready { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     HEADER
+═════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
+
+    <nav class="nav">
+      <a href="konzept.html"         class="nav-item">KONZEPT</a>
+      <a href="kollektionen.html"   class="nav-item active">KOLLEKTIONEN</a>
+      <a href="kollektionen.html" class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"         class="nav-item">ÜBER</a>
+      <a href="index.html"         class="nav-item">SERVICE</a>
+      <a href="index.html#cta"      class="nav-item">PARTNER</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="index.html" class="action-item">
+        <img class="ico" src="assets/vector-search.svg" alt="">
+        OPTIKER-SUCHE
+      </a>
+      <a href="index.html" class="action-item">
+        <img class="ico-user" src="assets/user-icon.svg" alt="">
+        LOGIN
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="konzept.html">KONZEPT</a>
+  <a href="kollektionen.html" class="active">KOLLEKTIONEN</a>
+  <a href="kollektionen.html" class="close-nav">FASSUNGEN</a>
+  <a href="index.html" class="close-nav">GLÄSER</a>
+  <a href="index.html" class="close-nav">KOMPLETTBRILLE</a>
+  <a href="index.html"      class="close-nav">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
+  <a href="index.html#cta" class="close-nav">PARTNER</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
+</nav>
+
+<main class="page-content">
+
+<!-- ════════════════════════════════
+     HERO
+═════════════════════════════════ -->
+<section class="koll-hero">
+  <div class="koll-hero-content">
+    <p class="koll-hero-tag">UNSERE KOLLEKTIONEN</p>
+    <h1 class="koll-hero-title">STARKES<br>RAHMENPROGRAMM</h1>
+    <p class="koll-hero-body">
+      Entdecken Sie unsere exklusiven Marken-Kollektionen – von zeitlosem Design bis
+      zu modernen Sonnenbrillen. Jede Fassung wird von internationalen Top-Designern
+      in unserem Designhaus in Baden-Württemberg gestaltet.
+    </p>
+  </div>
+
+  <!-- Brand logos -->
+  <div class="brand-logos">
+    <div class="brand-logo-item">
+      <a href="#card-b1"><img src="assets/B1-nav.svg" alt="B1"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-be"><img src="assets/BE-nav.svg" alt="BE"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-masca"><img src="assets/MASCA-nav.svg" alt="MASCA"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-mascalite"><img src="assets/MASCA-LITE-nav.svg" alt="MASCA LITE"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-diferro"><img src="assets/DiFERRO-nav.svg" alt="DIFERRO"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-mita"><img src="assets/MITA-nav.svg" alt="MITA"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-b1sun"><img src="assets/B1-Sun-nav.svg" alt="B1 SUNGLASSES"></a>
+    </div>
+    <div class="brand-logo-item">
+      <a href="#card-mascasun"><img src="assets/Masca-Sun-nav.svg" alt="MASCA SUNGLASSES"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     KOLLEKTIONEN GRID
+═════════════════════════════════ -->
+<section>
+  <h2 class="section-heading">ENTDECKEN SIE UNSERE KOLLEKTIONEN</h2>
+
+  <!-- Filter buttons -->
+  <div class="koll-filters">
+    <button class="btn btn-red koll-filter" data-filter="all">ALLE BRILLEN</button>
+    <button class="btn btn-outline-dark koll-filter" data-filter="sehbrillen">SEHBRILLEN</button>
+    <button class="btn btn-outline-dark koll-filter" data-filter="sonnenbrillen">SONNENBRILLEN</button>
+  </div>
+
+  <!-- Cards -->
+  <div class="koll-grid">
+
+    <!-- B1 -->
+    <div class="koll-card" id="card-b1" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/B1-nav.svg" alt="B1">
+      <img class="koll-card-product" src="assets/koll-b1-product.png" alt="B1 Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU B1</a>
+    </div>
+
+    <!-- BE -->
+    <div class="koll-card" id="card-be" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/BE-nav.svg" alt="BE">
+      <img class="koll-card-product" src="assets/koll-be-product.png" alt="BE Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU BE</a>
+    </div>
+
+    <!-- MASCA -->
+    <div class="koll-card" id="card-masca" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/MASCA-nav.svg" alt="MASCA">
+      <img class="koll-card-product" src="assets/koll-masca-product.png" alt="MASCA Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU MASCA</a>
+    </div>
+
+    <!-- MASCA LITE -->
+    <div class="koll-card" id="card-mascalite" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/MASCA-LITE-nav.svg" alt="MASCA LITE">
+      <img class="koll-card-product" src="assets/koll-mascalite-product.png" alt="MASCA LITE Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU MASCA LITE</a>
+    </div>
+
+    <!-- DIFERRO -->
+    <div class="koll-card" id="card-diferro" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/DiFERRO-nav.svg" alt="DIFERRO">
+      <img class="koll-card-product" src="assets/koll-diferro-product.png" alt="DIFERRO Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU DIFERRO</a>
+    </div>
+
+    <!-- MITA -->
+    <div class="koll-card" id="card-mita" data-cat="sehbrillen">
+      <img class="koll-card-logo" src="assets/MITA-nav.svg" alt="MITA">
+      <img class="koll-card-product" src="assets/koll-mita-product.png" alt="MITA Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU MITA</a>
+    </div>
+
+    <!-- B1 SUNGLASSES -->
+    <div class="koll-card" id="card-b1sun" data-cat="sonnenbrillen">
+      <img class="koll-card-logo" src="assets/B1-Sun-nav.svg" alt="B1 SUNGLASSES">
+      <img class="koll-card-product" src="assets/koll-b1sun-product.png" alt="B1 Sunglasses Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU B1 SUNGLASSES</a>
+    </div>
+
+    <!-- MASCA SUNGLASSES -->
+    <div class="koll-card" id="card-mascasun" data-cat="sonnenbrillen">
+      <img class="koll-card-logo" src="assets/Masca-Sun-nav.svg" alt="MASCA SUNGLASSES">
+      <img class="koll-card-product" src="assets/koll-mascasun-product.png" alt="MASCA Sunglasses Kollektion">
+      <a href="masca.html" class="btn btn-outline-dark">ZU MASCA SUNGLASSES</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CTA
+═════════════════════════════════ -->
+<section id="cta" class="cta">
+  <h2 class="cta-title">INTERESSIERT?</h2>
+  <a href="index.html" class="btn btn-red">INFO-CALL VEREINBAREN</a>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+═════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-h">SORTIMENT</span>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
+        <a class="footer-col-l">Gläser</a>
+        <a class="footer-col-l">Komplettbrillen</a>
+        <a class="footer-col-l">Sonnenbrillen</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KOLLEKTIONEN</span>
+        <a class="footer-col-l">B1</a>
+        <a class="footer-col-l">BE</a>
+        <a class="footer-col-l">DIFFERO</a>
+        <a class="footer-col-l">MASCA</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">PARTNER</span>
+        <a class="footer-col-l">Konzept</a>
+        <a class="footer-col-l">BPO-System</a>
+        <a class="footer-col-l">Partner werden</a>
+        <a class="footer-col-l">Partner-Login</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">ÜBER</span>
+        <a class="footer-col-l">Designhaus</a>
+        <a class="footer-col-l">Unternehmen</a>
+        <a class="footer-col-l">Karriere</a>
+        <a class="footer-col-l">Presse</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KONTAKT</span>
+        <a class="footer-col-l">Zentrale</a>
+        <a class="footer-col-l">Service</a>
+        <a class="footer-col-l">Newsletter</a>
+        <a class="footer-col-l">Downloads</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════
+     COPYRIGHT
+═════════════════════════════════ -->
+<div class="copyright">
+  <div class="copyright-inner">
+    <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
+    <span>DE | EN</span>
+  </div>
+</div>
+
+</main>
+
+<!-- ════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════ -->
+<script>
+  /* Hamburger menu */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', function () {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+
+  /* Close mobile nav on link click */
+  document.querySelectorAll('.mobile-nav a, .close-nav').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  /* Kollektionen filter (animated) */
+  const filterBtns = document.querySelectorAll('.koll-filter');
+  const cards = document.querySelectorAll('.koll-card');
+  let filterLock = false;
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (filterLock) return;
+      filterLock = true;
+
+      /* Active button state */
+      filterBtns.forEach(function (b) {
+        b.classList.remove('btn-red');
+        b.classList.add('btn-outline-dark');
+      });
+      btn.classList.add('btn-red');
+      btn.classList.remove('btn-outline-dark');
+
+      const filter = btn.dataset.filter;
+
+      /* Step 1: fade all visible cards out */
+      cards.forEach(function (card) {
+        if (card.style.display !== 'none') {
+          card.style.opacity = '0';
+          card.style.pointerEvents = 'none';
+        }
+      });
+
+      /* Step 2: after fade, swap visibility and fade in matching */
+      setTimeout(function () {
+        cards.forEach(function (card) {
+          const match = filter === 'all' || card.dataset.cat === filter;
+          if (match) {
+            card.style.display = '';
+            card.style.transition = 'none';
+            card.style.opacity = '0';
+          } else {
+            card.style.display = 'none';
+            card.style.opacity = '';
+          }
+        });
+
+        /* Force reflow, then fade in */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            cards.forEach(function (card) {
+              if (card.style.display !== 'none') {
+                card.style.transition = '';
+                card.style.opacity = '1';
+                card.style.pointerEvents = '';
+              }
+            });
+            filterLock = false;
+          });
+        });
+      }, 250);
+    });
+  });
+
+  /* Clickable cards */
+  document.querySelectorAll('.koll-card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) return;
+      var link = card.querySelector('a');
+      if (link) link.click();
+    });
+  });
+
+  /* Page transitions — header stays, only content fades */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () {
+    pageContent.classList.add('page-ready');
+  });
+
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+</script>
+
+</body>
+</html>
