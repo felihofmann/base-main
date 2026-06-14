@@ -903,9 +903,11 @@
       bottom.style.opacity = '1';
     }
 
+    video.addEventListener('timeupdate', function () {
+      if (video.duration && video.currentTime >= video.duration * 0.9) showBottom();
+    });
     video.addEventListener('ended', function () {
       video.currentTime = video.duration;
-      showBottom();
     });
 
     /* Fallback: if video can't play (autoplay blocked), show copy immediately */
