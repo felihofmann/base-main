@@ -206,64 +206,48 @@
     max-width: 1280px; margin: 0 auto;
   }
 
-  /* ─── QUOTES ─── */
-  .quotes-heading {
+  /* ─── LOGO MARQUEE ─── */
+  .logos-heading {
     font-weight: 700; font-size: 70px; letter-spacing: -4.2px;
     color: #000; text-align: center;
     padding: 100px var(--pad) 60px;
     max-width: 1280px; margin: 0 auto;
   }
-  .quotes-outer {
+  .logos-outer {
     position: relative; overflow: hidden;
-    padding: 0 0 175px;
+    padding: 0 0 100px;
     mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-  }
-  .q-blur-left, .q-blur-right {
-    position: absolute; top: 0; bottom: 0; width: 18%;
-    z-index: 5; pointer-events: none;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  }
-  .q-blur-left {
-    left: 0;
-    mask-image: linear-gradient(to right, black 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
-  }
-  .q-blur-right {
-    right: 0;
-    mask-image: linear-gradient(to left, black 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
   }
   @keyframes marquee {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
-  .q-track {
+  .logos-track {
     display: flex; width: max-content;
-    animation: marquee 28s linear infinite; gap: 16px;
+    animation: marquee 24s linear infinite;
+    align-items: center;
   }
-  .q-slide {
-    flex-shrink: 0; width: 520px;
-    background: #C9C5BE; border-radius: 15px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 14px; padding: 40px 36px; min-height: 210px;
-    transition: transform .3s ease;
+  .logos-item {
+    flex-shrink: 0;
+    padding: 0 56px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
   }
-  .q-slide:hover { transform: scale(1.01); }
-  .q-slide-text {
-    font-weight: 700; font-size: 29px; line-height: 1.09;
-    color: #fff; letter-spacing: -1.5px; text-align: center;
-    transition: color .3s ease;
+  .logos-item img {
+    height: 36px; width: auto; max-width: 120px;
+    object-fit: contain;
+    filter: brightness(0);
+    opacity: 0.9;
+    transition: transform .3s ease, opacity .3s ease;
   }
-  .q-slide:hover .q-slide-text { color: #333; }
-  .q-slide-stars { display: none; }
-  .q-slide-author {
-    font-weight: 400; font-size: 18px;
-    color: #fff; letter-spacing: -0.5px; text-align: center;
-    transition: color .3s ease;
+  .logos-item img[src*="B1-nav"],
+  .logos-item img[src*="BE-nav"]      { height: 26px; }
+  .logos-item img[src*="MASCA-LITE"]  { height: 46px; }
+  .logos-item:hover img {
+    transform: scale(1.1);
+    opacity: 1;
   }
-  .q-slide:hover .q-slide-author { color: #555; }
 
   /* ─── CTA SECTION ─── */
   .konzept-cta {
@@ -466,39 +450,20 @@
 </section>
 
 <!-- ════════════════════════════════
-     QUOTES
+     LOGO MARQUEE
 ═════════════════════════════════ -->
 <section>
-  <h2 class="section-heading">ÜBER 1.800 OPTIKER VERTRAUEN UNS.</h2>
-  <div class="quotes-outer">
-    <div class="q-blur-left"></div>
-    <div class="q-blur-right"></div>
-    <div class="q-track" id="qTrack">
-      <div class="q-slide">
-        <div class="q-slide-text">»EIN UNSCHLAGBARES ANGEBOT«</div>
-        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
-        <div class="q-slide-author">Johannes Metzger, Inhaber „Optik Metzger", Balingen</div>
-      </div>
-      <div class="q-slide">
-        <div class="q-slide-text">»SEIT JAHREN EIN VERLÄSSLICHER PARTNER«</div>
-        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
-        <div class="q-slide-author">Marion Huber, Geschäftsführerin „Optik Huber", Stuttgart</div>
-      </div>
-      <div class="q-slide">
-        <div class="q-slide-text">»DIE BESTE ENTSCHEIDUNG FÜR UNSER GESCHÄFT«</div>
-        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
-        <div class="q-slide-author">Thomas Klein, Inhaber „Augenoptik Klein", Freiburg</div>
-      </div>
-      <div class="q-slide">
-        <div class="q-slide-text">»QUALITÄT, DIE MAN SIEHT UND SPÜRT«</div>
-        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
-        <div class="q-slide-author">Sandra Müller, Geschäftsführerin „Optik am Markt", Ulm</div>
-      </div>
-      <div class="q-slide">
-        <div class="q-slide-text">»UNSER UMSATZ HAT SICH VERDOPPELT«</div>
-        <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
-        <div class="q-slide-author">Peter Bauer, Inhaber „Brillenhaus Bauer", Karlsruhe</div>
-      </div>
+  <h2 class="logos-heading">UNSERE KOLLEKTIONEN.</h2>
+  <div class="logos-outer">
+    <div class="logos-track" id="logosTrack">
+      <a href="kollektionen.html" class="logos-item"><img src="assets/B1-nav.svg" alt="B1"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/BE-nav.svg" alt="BE"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/MASCA-nav.svg" alt="MASCA"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/MASCA-LITE-nav.svg" alt="MASCA LITE"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/DiFERRO-nav.svg" alt="DIFERRO"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/MITA-nav.svg" alt="MITA"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/B1-Sun-nav.svg" alt="B1 Sun"></a>
+      <a href="kollektionen.html" class="logos-item"><img src="assets/Masca-Sun-nav.svg" alt="MASCA Sun"></a>
     </div>
   </div>
 </section>
@@ -591,11 +556,11 @@
     });
   });
 
-  /* Quotes marquee — clone slides for seamless loop */
+  /* Logo marquee — clone items for seamless loop */
   (function () {
-    const track = document.getElementById('qTrack');
-    [...track.querySelectorAll('.q-slide')].forEach(function (s) {
-      track.appendChild(s.cloneNode(true));
+    const track = document.getElementById('logosTrack');
+    [...track.querySelectorAll('.logos-item')].forEach(function (item) {
+      track.appendChild(item.cloneNode(true));
     });
   })();
 
