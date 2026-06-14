@@ -904,7 +904,7 @@
     }
 
     video.addEventListener('timeupdate', function () {
-      if (video.duration && video.currentTime >= video.duration * 0.9) showBottom();
+      if (video.duration && video.currentTime >= video.duration * 0.8) showBottom();
     });
     video.addEventListener('ended', function () {
       video.currentTime = video.duration;
