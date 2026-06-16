@@ -19,13 +19,13 @@
   }
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html  { scroll-behavior: smooth; }
-  body  { font-family: 'Montserrat', sans-serif; font-weight: 400; background: #fff; color: #000; }
+  body  { font-family: 'Montserrat', sans-serif; font-weight: 400; letter-spacing: -0.05em; background: #fff; color: #000; }
 
   h1, h2, h3,
   .nav-item, .mobile-nav a,
-  .detail-model-name, .detail-wahl-tag, .detail-wahl-title,
-  .price-box-title, .wahl-card-tag, .wahl-card-title,
-  .section-heading, .mehr-card-model, .footer-col-h {
+  .detail-model-name, .detail-wahl-title,
+  .price-box-title, .wahl-card-title,
+  .section-heading, .mehr-card-model {
     font-family: 'Oswald', sans-serif;
   }
 
@@ -183,7 +183,7 @@
 
   /* ─── SIE HABEN DIE WAHL ─── */
   .detail-wahl-wrap { max-width: 1280px; margin: 0 auto; padding: 80px var(--pad) 80px; text-align: center; }
-  .detail-wahl-tag { font-weight: 300; font-size: 18px; color: var(--rot); letter-spacing: -0.75px; margin-bottom: 10px; }
+  .detail-wahl-tag { font-size: 18px; color: var(--rot); letter-spacing: -0.75px; margin-bottom: 10px; }
   .detail-wahl-title { font-weight: 700; font-size: 72px; letter-spacing: -4.5px; color: #000; line-height: 1.0; margin-bottom: 24px; }
   .detail-wahl-body { font-size: 18px; color: #000; line-height: 1.43; max-width: 720px; margin: 0 auto 48px; }
   .wahl-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
@@ -196,7 +196,7 @@
   .wahl-card-green { background: linear-gradient(to bottom, #e2e9da, #f5f8f2); }
   .wahl-card-blue  { background: linear-gradient(to bottom, #e4e9e9, #f4f4f4); }
   .wahl-card-beige { background: linear-gradient(to bottom, #ede5d8, #f0ede7); }
-  .wahl-card-tag { font-weight: 300; font-size: 18px; letter-spacing: -0.6px; margin-bottom: 6px; }
+  .wahl-card-tag { font-size: 18px; letter-spacing: -0.6px; margin-bottom: 6px; }
   .tag-green { color: var(--dunkel-gruen); }
   .tag-blue  { color: var(--dunkelblau); }
   .tag-red   { color: var(--rot); }
