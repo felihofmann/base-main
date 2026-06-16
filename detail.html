@@ -50,7 +50,7 @@
   }
   .nav-item::after {
     content: ''; position: absolute; bottom: 2px; left: 9px;
-    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+    width: 0; height: 1px; background: #fff; transition: width .3s ease;
   }
   .nav-item:hover::after, .nav-item.active::after { width: calc(100% - 18px); }
   .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
@@ -61,7 +61,7 @@
   }
   .action-item::after {
     content: ''; position: absolute; bottom: 2px; left: 5px;
-    width: 0; height: 1.5px; background: #fff; transition: width .3s ease;
+    width: 0; height: 1px; background: #fff; transition: width .3s ease;
   }
   .action-item:hover::after { width: calc(100% - 10px); }
   .action-item .ico      { width: 13px; height: 13px; filter: brightness(0) invert(1); }
@@ -147,7 +147,7 @@
   .detail-model-name { font-weight: 700; font-size: 75px; letter-spacing: -4.5px; line-height: 1.0; color: #000; }
   .neu-badge {
     display: inline-flex; align-items: center; justify-content: center;
-    background: var(--rot); color: #fff; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 15px;
+    background: var(--rot); color: #fff; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 14px;
     padding: 4px 11px; border-radius: 20px; flex-shrink: 0;
     align-self: flex-start; margin-top: -4px;
   }
@@ -241,14 +241,14 @@
   .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
   .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
   .footer-col  { display: flex; flex-direction: column; }
-  .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
-  .footer-col-l { font-size: 15px; line-height: 1.79; color: #fff; text-decoration: none; cursor: pointer; transition: color .15s; position: relative; width: fit-content; }
-  .footer-col-l::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease; }
+  .footer-col-h { font-weight: 700; font-size: 14px; line-height: 2; color: #fff; }
+  .footer-col-l { font-size: 14px; line-height: 1.79; color: #fff; text-decoration: none; cursor: pointer; transition: color .15s; position: relative; width: fit-content; }
+  .footer-col-l::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 0; height: 1px; background: var(--rot); transition: width .3s ease; }
   .footer-col-l:hover::after { width: 100%; }
   .copyright { background: rgba(12,12,12,0.9); border-top: 1px solid #2a2a2a; padding: 14px var(--pad); }
   .copyright-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center; font-size: 14px; color: #fff; }
   .copyright-inner a { color: #fff; text-decoration: none; position: relative; }
-  .copyright-inner a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease; }
+  .copyright-inner a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1px; background: var(--rot); transition: width .3s ease; }
   .copyright-inner a:hover::after { width: 100%; }
 
   /* ═══ BREAKPOINTS ═══ */
