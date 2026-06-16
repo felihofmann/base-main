@@ -7,7 +7,7 @@
 <title>MA4970 – MASCA – BASE Eyewear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --dunkelblau:  #295C83;
@@ -19,7 +19,15 @@
   }
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html  { scroll-behavior: smooth; }
-  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+  body  { font-family: 'Montserrat', sans-serif; font-weight: 400; background: #fff; color: #000; }
+
+  h1, h2, h3,
+  .nav-item, .mobile-nav a,
+  .detail-model-name, .detail-wahl-tag, .detail-wahl-title,
+  .price-box-title, .wahl-card-tag, .wahl-card-title,
+  .section-heading, .mehr-card-model, .footer-col-h {
+    font-family: 'Oswald', sans-serif;
+  }
 
   /* ─── HEADER ─── */
   .header {
@@ -143,7 +151,7 @@
     padding: 4px 11px; border-radius: 20px; flex-shrink: 0;
     align-self: flex-start; margin-top: 14px;
   }
-  .detail-desc { font-weight: 300; font-size: 18px; color: #000; line-height: 1.55; margin-bottom: 24px; max-width: 530px; }
+  .detail-desc { font-size: 18px; color: #000; line-height: 1.32; margin-bottom: 24px; max-width: 530px; }
 
   /* Spec table */
   .detail-specs { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
@@ -151,12 +159,12 @@
   .detail-specs tr:last-child { border-bottom: 1px solid rgba(0,0,0,0.13); }
   .detail-specs td { padding: 10px 0; font-size: 16px; vertical-align: middle; }
   .spec-label { font-weight: 500; padding-right: 24px; white-space: nowrap; letter-spacing: -0.6px; }
-  .spec-value { font-weight: 300; }
+  .spec-value { }
 
   /* Dimensions */
   .detail-dims { width: 100%; max-width: 530px; object-fit: contain; margin: 40px 0 6px; mix-blend-mode: multiply; }
   .detail-conformity {
-    display: block; font-weight: 300; font-size: 16px; color: #000;
+    display: block; font-size: 16px; color: #000;
     text-decoration: none; margin-bottom: 40px; cursor: pointer;
   }
   .detail-conformity:hover { text-decoration: underline; }
@@ -169,15 +177,15 @@
   .detail-price-box { background: #413f3c; border-radius: 15px; padding: 22px 28px; color: #fff; }
   .price-box-title { font-weight: 700; font-size: 18px; letter-spacing: -0.6px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.2); }
   .price-box-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.2); gap: 16px; }
-  .price-box-label { font-weight: 300; font-size: 18px; }
-  .price-box-link { font-weight: 300; font-size: 16px; color: #fff; text-decoration: underline; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-  .price-box-note { padding-top: 12px; font-weight: 300; font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+  .price-box-label { font-size: 18px; }
+  .price-box-link { font-size: 16px; color: #fff; text-decoration: underline; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .price-box-note { padding-top: 12px; font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.32; }
 
   /* ─── SIE HABEN DIE WAHL ─── */
   .detail-wahl-wrap { max-width: 1280px; margin: 0 auto; padding: 80px var(--pad) 80px; text-align: center; }
   .detail-wahl-tag { font-weight: 300; font-size: 18px; color: var(--rot); letter-spacing: -0.75px; margin-bottom: 10px; }
   .detail-wahl-title { font-weight: 700; font-size: 72px; letter-spacing: -4.5px; color: #000; line-height: 1.0; margin-bottom: 24px; }
-  .detail-wahl-body { font-weight: 300; font-size: 18px; color: #000; line-height: 1.6; max-width: 720px; margin: 0 auto 48px; }
+  .detail-wahl-body { font-size: 18px; color: #000; line-height: 1.36; max-width: 720px; margin: 0 auto 48px; }
   .wahl-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
   .wahl-card {
     border-radius: 15px; padding: 32px 28px 28px;
@@ -193,7 +201,7 @@
   .tag-blue  { color: var(--dunkelblau); }
   .tag-red   { color: var(--rot); }
   .wahl-card-title { font-weight: 700; font-size: 33px; letter-spacing: -1.75px; color: #000; line-height: 1.2; margin-bottom: 14px; }
-  .wahl-card-body { font-weight: 300; font-size: 19px; color: #000; line-height: 1.45; flex: 1; }
+  .wahl-card-body { font-size: 19px; color: #000; line-height: 1.23; flex: 1; }
   .wahl-card .btn { margin-top: 24px; font-size: 16px; }
 
   /* ─── WEITERE MODELLE ─── */
@@ -223,7 +231,7 @@
   .mehr-card:hover .mehr-card-img { transform: scale(1.10); }
   .mehr-card-info { padding: 12px 14px 16px; text-align: center; color: #413f3c; display: flex; flex-direction: column; gap: 3px; }
   .mehr-card-model { font-weight: 700; font-size: 18px; line-height: 1.2; }
-  .mehr-card-desc  { font-weight: 300; font-size: 16px; }
+  .mehr-card-desc  { font-size: 16px; }
   .mehr-card-neu { position: absolute; top: 8px; right: 8px; background: var(--rot); color: #fff; font-weight: 700; font-size: 14px; padding: 3px 10px; border-radius: 20px; }
   .mehr-cta { margin-top: 32px; }
 
@@ -234,7 +242,7 @@
   .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
   .footer-col  { display: flex; flex-direction: column; }
   .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
-  .footer-col-l { font-weight: 300; font-size: 15px; line-height: 2; color: #fff; text-decoration: none; cursor: pointer; transition: color .15s; position: relative; width: fit-content; }
+  .footer-col-l { font-size: 15px; line-height: 1.7; color: #fff; text-decoration: none; cursor: pointer; transition: color .15s; position: relative; width: fit-content; }
   .footer-col-l::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 0; height: 1.5px; background: var(--rot); transition: width .3s ease; }
   .footer-col-l:hover::after { width: 100%; }
   .copyright { background: rgba(12,12,12,0.9); border-top: 1px solid #2a2a2a; padding: 14px var(--pad); }

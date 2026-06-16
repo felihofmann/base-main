@@ -7,7 +7,7 @@
 <title>MASCA – BASE Eyewear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   /* ── Figma Variables ── */
   :root {
@@ -26,7 +26,14 @@
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html  { scroll-behavior: smooth; }
-  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+  body  { font-family: 'Montserrat', sans-serif; font-weight: 400; background: #fff; color: #000; }
+
+  h1, h2, h3,
+  .nav-item, .mobile-nav a,
+  .masca-cta-title, .masca-card-model,
+  .filter-group-title, .footer-col-h {
+    font-family: 'Oswald', sans-serif;
+  }
 
   /* ─── HEADER ─── */
   .header {
@@ -138,8 +145,8 @@
   }
   .masca-hero-logo { height: 68px; width: auto; max-width: 340px; object-fit: contain; }
   .masca-hero-body {
-    font-weight: 300; font-size: 18px;
-    color: #000; line-height: 1.6;
+    font-size: 18px;
+    color: #000; line-height: 1.36;
   }
 
   /* Toggle switch */
@@ -201,7 +208,7 @@
   .filter-list { list-style: none; }
   .filter-list li {
     display: flex; justify-content: space-between; align-items: center;
-    font-weight: 300; font-size: 13px; color: #5b5b5b;
+    font-size: 13px; color: #5b5b5b;
     padding: 2px 8px; margin: 1px 0;
     border: 1.5px solid transparent; border-radius: 20px;
     cursor: pointer;
@@ -268,7 +275,7 @@
   }
   .masca-card:hover .masca-card-model::after { width: 100%; }
   .masca-card-desc {
-    font-weight: 300; font-size: 14px;
+    font-size: 14px;
     color: #413f3c;
   }
 
@@ -304,7 +311,7 @@
     color: #fff; font-weight: 700;
   }
   .masca-pag-count {
-    font-weight: 300; font-size: 14px; color: #5b5b5b;
+    font-size: 14px; color: #5b5b5b;
   }
 
   /* ─── CTA ─── */
@@ -319,8 +326,8 @@
     color: #000; letter-spacing: -4px;
   }
   .masca-cta-body {
-    font-weight: 300; font-size: 18px;
-    color: #000; line-height: 1.6; max-width: 520px;
+    font-size: 18px;
+    color: #000; line-height: 1.36; max-width: 520px;
   }
   .masca-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
@@ -335,7 +342,7 @@
   .footer-col  { display: flex; flex-direction: column; }
   .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
   .footer-col-l {
-    font-weight: 300; font-size: 15px; line-height: 2;
+    font-size: 15px; line-height: 1.7;
     color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
     position: relative; width: fit-content;
   }

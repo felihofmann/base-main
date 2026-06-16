@@ -7,7 +7,7 @@
 <title>Kollektionen – BASE Eyewear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   /* ── Figma Variables ── */
   :root {
@@ -26,7 +26,14 @@
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html  { scroll-behavior: smooth; }
-  body  { font-family: 'Oswald', sans-serif; background: #fff; color: #000; }
+  body  { font-family: 'Montserrat', sans-serif; font-weight: 400; background: #fff; color: #000; }
+
+  h1, h2, h3,
+  .nav-item, .mobile-nav a,
+  .koll-hero-tag, .koll-hero-title,
+  .section-heading, .cta-title, .footer-col-h {
+    font-family: 'Oswald', sans-serif;
+  }
 
   /* ─────────────────────────────────────────────
      HEADER
@@ -183,8 +190,8 @@
   }
 
   .koll-hero-body {
-    font-weight: 300; font-size: 18px;
-    color: #000; line-height: 1.6; max-width: 680px;
+    font-size: 18px;
+    color: #000; line-height: 1.36; max-width: 680px;
   }
 
   /* Brand logos row */
@@ -300,7 +307,7 @@
   .footer-col  { display: flex; flex-direction: column; }
   .footer-col-h { font-weight: 700; font-size: 15px; line-height: 2; color: #fff; }
   .footer-col-l {
-    font-weight: 300; font-size: 15px; line-height: 2;
+    font-size: 15px; line-height: 1.7;
     color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
     position: relative; width: fit-content;
   }
