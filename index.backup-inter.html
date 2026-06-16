@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<title>BASE Eyewear – Die BASE für Ihren Erfolg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Figma Variables ── */
+  :root {
+    --dunkelblau:       #295C83;
+    --sand:             #EDE5D8;
+    --hell-blau:        #E4E9E9;
+    --dunkel-gruen:     #5E6456;
+    --beige:            #FFF8EE;
+    --ultra-light-grey: #FBFBFB;
+    --rot:              #9f1918;
+    --dark-nav:         #425050;
+    --grey-footer:      #d9d9d9;
+    --header-h:         80px;
+    --pad:              44px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html  { scroll-behavior: smooth; }
+  body  { font-family: 'Inter', sans-serif; font-weight: 300; background: #fff; color: #000; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  h1, h2, h3,
+  .nav-item, .mobile-nav a, .action-item,
+  .hero-title, .section-heading,
+  .card-title, .bpo-title,
+  .cta-title, .q-slide-text {
+    font-family: 'Oswald', sans-serif;
+  }
+
+  /* ─────────────────────────────────────────────
+     HEADER
+  ───────────────────────────────────────────── */
+  .header {
+    position: sticky; top: 0; z-index: 200;
+    width: 100%; height: var(--header-h);
+    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(220,220,220,0.45);
+  }
+
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 var(--pad);
+    height: 100%;
+    display: flex; align-items: center; gap: 36px;
+  }
+
+  .header-logo-link { display: flex; align-items: center; flex-shrink: 0; line-height: 0; }
+  .header-logo { height: 36px; width: auto; }
+
+  .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
+  .nav-item {
+    padding: 5px 9px;
+    font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s;
+    position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 9px;
+    width: 0; height: 1px; background: #fff;
+    transition: width .3s ease;
+  }
+  .nav-item:hover::after { width: calc(100% - 18px); }
+  .nav-item.active::after { width: calc(100% - 18px); }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .action-item {
+    display: flex; gap: 5px; align-items: center;
+    padding: 5px; font-weight: 400; font-size: 14px; color: #fff;
+    text-decoration: none; white-space: nowrap;
+    transition: color .15s;
+    position: relative;
+  }
+  .action-item::after {
+    content: ''; position: absolute; bottom: 2px; left: 5px;
+    width: 0; height: 1px; background: #fff;
+    transition: width .3s ease;
+  }
+  .action-item:hover::after { width: calc(100% - 10px); }
+  .action-item .ico { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+
+  /* Hamburger button */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px;
+    background: none; border: none; cursor: pointer; margin-left: auto; flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px; background: #fff;
+    transition: transform .28s ease, opacity .28s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none; position: fixed;
+    top: var(--header-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(8px);
+    padding: 12px 24px 28px;
+    z-index: 199;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 12px 0; font-size: 17px; font-weight: 400;
+    color: #000; text-decoration: none;
+    border-bottom: 1px solid #ebebeb;
+    transition: color .15s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover { color: var(--rot); }
+  .mobile-nav a.active { color: var(--rot); }
+
+  /* ─────────────────────────────────────────────
+     BUTTONS
+  ───────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 13px; padding: 8px 20px;
+    font-family: 'Oswald', sans-serif; font-weight: 400;
+    font-size: 17px; letter-spacing: -0.7px;
+    text-decoration: none; cursor: pointer; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+
+  .btn-red   { background: var(--rot);        color: #fff; border: 2px solid transparent; }
+  .btn-dark  { background: var(--dark-nav);   color: #fff; border: 2px solid transparent; }
+  .btn-blue  { background: var(--dunkelblau); color: #fff; border: 2px solid transparent; }
+  .btn-white { background: #fff;              color: #000; border: 1px solid transparent; }
+  .btn-outline-dark  { background: transparent; border: 2px solid #424242; color: #3d3d3d; }
+  .btn-outline-light { background: transparent; border: 1px solid #fff;    color: #fff; }
+
+  .btn-red:hover          { background: transparent; border-color: var(--rot);        color: var(--rot); }
+  .btn-dark:hover         { background: transparent; border-color: var(--dark-nav);   color: var(--dark-nav); }
+  .btn-blue:hover         { background: transparent; border-color: var(--dunkelblau); color: var(--dunkelblau); }
+  .btn-white:hover        { background: transparent; border-color: #fff;              color: #fff; }
+  .btn-outline-dark:hover  { background: #424242; border-color: #424242; color: #fff; }
+  .btn-outline-light:hover { background: #fff;    border-color: #fff;    color: #000; }
+
+  /* ─────────────────────────────────────────────
+     HERO
+  ───────────────────────────────────────────── */
+  /* Hero: stacked — headline | video | copy */
+  .hero {
+    height: calc(100vh - var(--header-h) - 40px);
+    height: calc(100dvh - var(--header-h) - 40px);
+    background: linear-gradient(to top, #F0E7E3 0%, #fff 25%);
+    display: flex; flex-direction: column; align-items: stretch;
+    overflow: hidden;
+  }
+
+  .hero-top {
+    flex-shrink: 0;
+    width: 100%; max-width: 1000px;
+    align-self: center;
+    padding: 66px var(--pad) 0;
+    text-align: center;
+    position: relative; z-index: 2;
+    margin-bottom: -40px;
+  }
+
+  .hero-video-wrap {
+    flex: 1; min-height: 0;
+    width: 75%; max-width: 960px;
+    align-self: center;
+    pointer-events: none;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+  .hero-video {
+    display: block; width: 100%; height: 100%;
+    max-height: 100%; object-fit: contain;
+    opacity: 0.9;
+  }
+
+  .hero-bottom {
+    flex-shrink: 0;
+    width: 100%; max-width: 900px;
+    align-self: center;
+    padding: 0 var(--pad) 56px;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center; gap: 32px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    position: relative; z-index: 2;
+    margin-top: -20px;
+    margin-bottom: 35px;
+  }
+
+  .hero-tag {
+    font-size: 20px;
+    color: var(--rot); letter-spacing: -0.4px; margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-weight: 700; font-size: 82px;
+    color: #000; letter-spacing: -5px; line-height: 1.0;
+  }
+
+  .hero-body {
+    font-size: 17px;
+    color: #000; line-height: 1.43; max-width: 680px;
+  }
+
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+  /* ─────────────────────────────────────────────
+     SECTION HEADING (shared)
+  ───────────────────────────────────────────── */
+  .section-heading {
+    font-weight: 700; font-size: 55px;
+    color: #000; letter-spacing: -4px;
+    text-align: center; padding: 64px var(--pad) 48px;
+    max-width: 1280px; margin: 0 auto;
+  }
+
+  /* ─────────────────────────────────────────────
+     PRODUCT CARDS
+  ───────────────────────────────────────────── */
+  .product-grid {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 var(--pad) 20px;
+    display: flex; flex-direction: column; gap: 100px;
+  }
+
+  .product-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+
+  /* Small square cards */
+  .card {
+    border-radius: 15px; overflow: hidden;
+    padding: 36px 36px 32px;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 14px; min-height: 460px;
+    cursor: pointer;
+    transition: transform .3s ease;
+  }
+  .card:hover { transform: scale(1.01); }
+  .card-koll { background: linear-gradient(to bottom, #e2e9da, #f7f9f6); }
+  .card-gl   { background: linear-gradient(to bottom, #E4E9E9, #f6f8f8); }
+
+  .card-tag {
+    font-size: 16px; letter-spacing: -0.5px;
+    margin-bottom: -7px;
+  }
+  .card-koll .card-tag { color: var(--dunkel-gruen); }
+  .card-gl   .card-tag { color: var(--dunkelblau); }
+
+  .card-title {
+    font-weight: 700; font-size: 34px;
+    color: #000; letter-spacing: -1.5px; line-height: 1.1;
+  }
+
+  .card-img {
+    width: 85%; max-height: 190px; object-fit: contain; flex: 1 1 auto; min-height: 0;
+  }
+
+  .card-desc {
+    font-size: 17px;
+    color: #000; line-height: 1.34;
+  }
+
+  /* Wide Komplett card */
+  .card-ko {
+    background: linear-gradient(to bottom, #EDE5D8, #f8f5f1);
+    border-radius: 15px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 440px;
+    cursor: pointer;
+    transition: transform .3s ease;
+  }
+  .card-ko:hover { transform: scale(1.01); }
+  .card-ko-content {
+    padding: 44px 40px 40px;
+    display: flex; flex-direction: column;
+    gap: 14px; justify-content: center;
+  }
+  .card-ko .card-tag { color: var(--rot); }
+  .card-ko .card-title { text-align: left; }
+  .card-ko .card-desc { text-align: left; }
+  .card-ko-image {
+    display: block;
+    width: 81%; height: auto;
+    object-fit: contain;
+    align-self: center; justify-self: end;
+  }
+
+  /* ─────────────────────────────────────────────
+     QUOTES SLIDER
+  ───────────────────────────────────────────── */
+  .quotes-outer {
+    position: relative;
+    padding: 0 0 140px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+  .q-blur-left, .q-blur-right {
+    position: absolute; top: 0; bottom: 0; width: 18%;
+    z-index: 5; pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .q-blur-left {
+    left: 0;
+    mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  }
+  .q-blur-right {
+    right: 0;
+    mask-image: linear-gradient(to left, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
+  }
+
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .q-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+    gap: 16px;
+  }
+
+  .q-slide {
+    flex-shrink: 0; width: 520px;
+    background: #C9C5BE; border-radius: 15px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; padding: 40px 36px;
+    min-height: 210px;
+    transition: transform .3s ease;
+  }
+  .q-slide:hover { transform: scale(1.01); }
+
+  .q-slide-text {
+    font-weight: 700; font-size: 29px; line-height: 1.09;
+    color: #fff; letter-spacing: -1.5px; text-align: center;
+    transition: color .3s ease;
+  }
+  .q-slide:hover .q-slide-text { color: #333; }
+  .q-slide-stars { display: none; }
+  .q-slide-author {
+    font-weight: 400; font-size: 17px;
+    color: #fff; letter-spacing: -0.5px; text-align: center;
+    transition: color .3s ease;
+  }
+  .q-slide:hover .q-slide-author { color: #555; }
+
+  /* ─────────────────────────────────────────────
+     BPO SECTION
+  ───────────────────────────────────────────── */
+  .komplett-wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--pad) 80px; }
+
+  .bpo-outer { padding: 0 var(--pad) 70px; }
+  .bpo-outer .section-heading { padding-left: 0; padding-right: 0; }
+
+  .bpo-card {
+    max-width: 1192px; margin: 0 auto;
+    background: linear-gradient(to bottom, #3c4e3a, #527050); border-radius: 15px;
+    overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 460px;
+    cursor: pointer;
+    transition: transform .3s ease;
+  }
+  .bpo-card:hover { transform: scale(1.01); }
+
+  .bpo-img-wrap { position: relative; overflow: hidden; }
+  .bpo-img-wrap > img.bpo-photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .bpo-logo-overlay {
+    position: absolute; top: 16px; left: 16px;
+    width: 75px; height: auto;
+  }
+
+  .bpo-content {
+    padding: 44px 44px 40px;
+    display: flex; flex-direction: column;
+    gap: 14px; justify-content: center;
+  }
+  .bpo-tag  { font-size: 16px; color: #e5e5e5; letter-spacing: -0.4px; margin-bottom: -7px; }
+  .bpo-title { font-weight: 700; font-size: 34px; color: #fff; letter-spacing: -1.5px; line-height: 1.1; }
+  .bpo-desc  { font-size: 17px; color: #fff; line-height: 1.43; }
+  .bpo-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* ─────────────────────────────────────────────
+     CTA SECTION
+  ───────────────────────────────────────────── */
+  .cta {
+    padding: 80px var(--pad) 160px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 32px;
+    text-align: center;
+  }
+  .cta-title {
+    font-weight: 700; font-size: 55px;
+    color: #000; letter-spacing: -4px;
+  }
+
+  /* ─────────────────────────────────────────────
+     FOOTER
+  ───────────────────────────────────────────── */
+  .footer {
+    background: linear-gradient(to top, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
+    padding: 86px var(--pad) 86px;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .footer-logo { height: 38px; width: auto; flex-shrink: 0; align-self: center; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; flex: 1; justify-content: space-between; margin-left: 48px; }
+  .footer-col  { display: flex; flex-direction: column; }
+  .footer-col-h { font-weight: 700; font-size: 14px; line-height: 2; color: #fff; }
+  .footer-col-l {
+    font-size: 14px; line-height: 1.79;
+    color: #fff; text-decoration: none; cursor: pointer; transition: color .15s;
+    position: relative; width: fit-content;
+  }
+  .footer-col-l::after {
+    content: ''; position: absolute; bottom: 4px; left: 0;
+    width: 0; height: 1px; background: #fff;
+    transition: width .3s ease;
+  }
+  .footer-col-l:hover::after { width: 100%; }
+
+  /* ─────────────────────────────────────────────
+     COPYRIGHT BAR
+  ───────────────────────────────────────────── */
+  .copyright {
+    background: rgba(12, 12, 12, 0.9);
+    border-top: 1px solid #2a2a2a;
+    padding: 14px var(--pad);
+  }
+  .copyright-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 28px; flex-wrap: wrap; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff;
+  }
+  .copyright-inner a {
+    color: #fff; text-decoration: none; transition: color .15s;
+    position: relative;
+  }
+  .copyright-inner a::after {
+    content: ''; position: absolute; bottom: -1px; left: 0;
+    width: 0; height: 1px; background: #fff;
+    transition: width .3s ease;
+  }
+  .copyright-inner a:hover::after { width: 100%; }
+
+  /* ═════════════════════════════════════════════
+     BREAKPOINTS
+  ═════════════════════════════════════════════ */
+
+  /* ── Tablet  768–1279 px ── */
+  @media (max-width: 1279px) {
+    :root { --pad: 32px; }
+
+    .nav-item    { font-size: 13px; padding: 4px 7px; }
+    .action-item { font-size: 13px; }
+
+    .hero-tag   { font-size: 17px; }
+    .hero-title { font-size: 62px; letter-spacing: -3.5px; }
+    .hero-body  { font-size: 17px; }
+
+    .section-heading { font-size: 52px; letter-spacing: -3px; }
+
+    .card-tag   { font-size: 17px; }
+    .card-title { font-size: 28px; }
+    .card-desc  { font-size: 17px; }
+    .card       { min-height: 400px; padding: 28px 24px; }
+    .card-ko-content { padding: 32px 28px; }
+
+    .q-slide        { width: 420px; }
+    .q-slide-text   { font-size: 24px; }
+    .q-slide-author { font-size: 17px; }
+
+    .card-ko { grid-template-columns: 1fr 1fr; min-height: 360px; }
+    .card-ko-content { padding: 32px 28px; }
+    .card-ko-image { align-self: center; }
+
+    .bpo-card  { grid-template-columns: 1fr 1fr; min-height: 400px; }
+    .bpo-tag   { font-size: 17px; }
+    .bpo-title { font-size: 28px; }
+    .bpo-desc  { font-size: 17px; }
+    .bpo-content { padding: 32px 28px; }
+
+    .cta-title { font-size: 46px; letter-spacing: -3px; }
+
+    .btn { font-size: 15px; }
+  }
+
+  /* ── Mobile  < 768 px ── */
+  @media (max-width: 767px) {
+    :root { --header-h: 62px; --pad: 20px; }
+
+    /* Header */
+    .nav, .header-actions { display: none; }
+    .hamburger { display: flex; }
+    .header-inner { gap: 0; }
+    .header-logo-link { flex-shrink: 0; }
+    .header-logo { height: 28px; }
+
+    /* Hero */
+    .hero { height: calc(100dvh - var(--header-h)); }
+    .hero-top    { padding: 20px var(--pad) 0; margin-bottom: -40px; }
+    .hero-tag    { font-size: 14px; }
+    .hero-title  { font-size: 42px; letter-spacing: -2.5px; }
+    .hero-video-wrap {
+      flex: 1; min-height: 0;
+      width: 150%; max-width: none;
+      align-self: auto;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    }
+    .hero-video { width: 100%; height: 100%; object-fit: cover; }
+    .hero-bottom { padding: 9px var(--pad) 22px; gap: 20px; margin-top: -40px; }
+    .hero-body   { display: none; }
+    .hero-buttons { flex-direction: column; align-items: stretch; width: 100%; max-width: 340px; }
+
+    /* Section headings */
+    .section-heading { font-size: 36px; letter-spacing: -2px; padding: 44px var(--pad) 28px; }
+
+    /* Product cards */
+    .product-grid  { padding: 0 var(--pad) 44px; gap: 14px; }
+    .product-row   { grid-template-columns: 1fr; }
+    .card          { min-height: auto; padding: 28px 22px 24px; }
+    .card-tag      { font-size: 15px; }
+    .card-title    { font-size: 24px; }
+    .card-desc     { font-size: 16px; }
+    .card-img      { max-height: 160px; }
+    .komplett-wrap { padding: 0 var(--pad) 48px; }
+    .card-ko       { grid-template-columns: 1fr; }
+    .card-ko-content { padding: 24px 22px 22px; align-items: center; }
+    .card-ko .card-tag   { text-align: center; }
+    .card-ko .card-title { text-align: center; }
+    .card-ko .card-desc  { text-align: center; }
+    .card-ko-image {
+      content: url('assets/BrilleKomplett_mobile.png');
+      width: calc(100% - 15px); height: auto;
+      object-fit: contain;
+      margin-left: 15px;
+      align-self: auto; justify-self: auto;
+    }
+
+    /* Quotes */
+    .quotes-outer { padding: 0 0 48px; }
+    .q-slide      { width: 300px; padding: 28px 20px; min-height: 180px; }
+    .q-slide-text   { font-size: 17px; }
+    .q-slide-author { font-size: 14px; }
+
+    /* BPO */
+    .bpo-outer     { padding: 0 var(--pad) 48px; }
+    .bpo-card      { grid-template-columns: 1fr; }
+    .bpo-img-wrap  { height: 260px; }
+    .bpo-content   { padding: 28px 22px 24px; }
+    .bpo-tag       { font-size: 15px; }
+    .bpo-title     { font-size: 24px; }
+    .bpo-desc      { font-size: 16px; }
+    .bpo-buttons   { flex-direction: column; align-items: stretch; }
+    .bpo-buttons .btn { width: 100%; justify-content: center; }
+
+    /* CTA */
+    .cta { padding: 56px var(--pad); }
+    .cta-title { font-size: 36px; letter-spacing: -2px; }
+    .cta .btn { width: 100%; max-width: 340px; }
+
+    /* Buttons */
+    .btn { font-size: 15px; padding: 9px 20px; }
+
+    /* Footer */
+    .footer { padding: 28px var(--pad); }
+    .footer-logo { display: none; }
+    .footer-inner { gap: 20px; }
+    .footer-cols  { gap: 16px; }
+    .footer-col   { width: calc(50% - 8px); }
+
+    /* Copyright */
+    .copyright { padding: 12px var(--pad); }
+    .copyright-inner { gap: 14px; font-size: 13px; }
+  }
+
+  /* Page transition — only content fades, header stays */
+  .page-content { opacity: 0; }
+  .page-content.page-ready { transition: opacity .25s ease; opacity: 1; }
+  .page-content.page-leaving { transition: opacity .18s ease; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     HEADER
+═════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
+
+    <nav class="nav">
+      <a href="konzept.html"         class="nav-item">KONZEPT</a>
+      <a href="kollektionen.html" class="nav-item">KOLLEKTIONEN</a>
+      <a href="kollektionen.html" class="nav-item">FASSUNGEN</a>
+      <a href="index.html" class="nav-item">GLÄSER</a>
+      <a href="index.html" class="nav-item">KOMPLETTBRILLE</a>
+      <a href="index.html"      class="nav-item">BEST-PREIS-OPTIK</a>
+      <a href="index.html"         class="nav-item">ÜBER</a>
+      <a href="index.html"         class="nav-item">SERVICE</a>
+      <a href="#cta"      class="nav-item">PARTNER</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="index.html" class="action-item">
+        <img class="ico" src="assets/vector-search.svg" alt="">
+        OPTIKER-SUCHE
+      </a>
+      <a href="index.html" class="action-item">
+        <img class="ico-user" src="assets/user-icon.svg" alt="">
+        LOGIN
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="konzept.html">KONZEPT</a>
+  <a href="kollektionen.html">KOLLEKTIONEN</a>
+  <a href="kollektionen.html" class="close-nav">FASSUNGEN</a>
+  <a href="index.html" class="close-nav">GLÄSER</a>
+  <a href="index.html" class="close-nav">KOMPLETTBRILLE</a>
+  <a href="index.html"      class="close-nav">BEST-PREIS-OPTIK</a>
+  <a href="index.html">ÜBER</a>
+  <a href="index.html">SERVICE</a>
+  <a href="#cta" class="close-nav">PARTNER</a>
+  <a href="index.html">OPTIKER-SUCHE</a>
+  <a href="index.html">LOGIN</a>
+</nav>
+
+<main class="page-content">
+
+<!-- ════════════════════════════════
+     HERO
+═════════════════════════════════ -->
+<section class="hero" id="start">
+
+  <!-- Topline + Headline -->
+  <div class="hero-top">
+    <p class="hero-tag">VOM DESIGN ÜBER DIE FASSUNG BIS ZUR KOMPLETT-BRILLE</p>
+    <h1 class="hero-title">DIE BASE FÜR IHREN ERFOLG.</h1>
+  </div>
+
+  <!-- Video -->
+  <div class="hero-video-wrap">
+    <video class="hero-video" autoplay muted playsinline preload="auto" id="heroVideo">
+      <source src="assets/HeroAnimation Sketch_White.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Copy + Buttons unten -->
+  <div class="hero-bottom">
+    <p class="hero-body">
+      Egal ob Fassung, Gläser oder Komplett-Brille: BASE steht für höchste Präzision und für
+      anspruchsvolles Design zu einem fairen Preis. Dieses flexible Konzept ist einzigartig im
+      Markt und bietet unabhängigen Optikern alle Möglichkeiten, jedem Kunden Premium-Markenbrillen
+      anbieten zu können. Denn höchste Qualität ist mit BASE keine Frage des Preises.
+      Es ist die Konsequenz einer Haltung.
+    </p>
+    <div class="hero-buttons">
+      <a href="konzept.html" class="btn btn-red">MEHR ZUM KONZEPT</a>
+      <a href="#cta"      class="btn btn-outline-dark">INFO-CALL VEREINBAREN</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════
+     PRODUCT SECTION
+═════════════════════════════════ -->
+<section id="produkte">
+  <h2 class="section-heading">VOLLER FOKUS AUF QUALITÄT.</h2>
+
+  <div class="product-grid">
+    <!-- Row: two small cards -->
+    <div class="product-row">
+
+      <!-- Card Kollektionen -->
+      <div class="card card-koll">
+        <p class="card-tag">BASE FASSUNG</p>
+        <h3 class="card-title">UNSERE MARKEN-KOLLEKTIONEN</h3>
+        <img class="card-img" src="assets/sketch.png" alt="Kollektionen Sketch">
+        <p class="card-desc">
+          Die Fassungen unserer exklusiven Marken werden von unserem internationalen
+          Designer-Team im BASE-Designhaus in Baden-Württemberg gestaltet.
+        </p>
+        <a href="kollektionen.html" class="btn btn-dark">ZU DEN KOLLEKTIONEN</a>
+      </div>
+
+      <!-- Card Gläser -->
+      <div class="card card-gl">
+        <p class="card-tag">BASE VISION</p>
+        <h3 class="card-title">UNSERE PREMIUM-GLÄSER</h3>
+        <img class="card-img" src="assets/image2.png" alt="Premium Gläser">
+        <p class="card-desc">
+          In unserem unabhängigen Glaslabor produzieren wir hochpräzise Premium-Gläser
+          für alle Brillen-Arten, von Einstärken bis Gleitsicht – alles „Made in Europe".
+        </p>
+        <a href="index.html" class="btn btn-blue">ZUM GLAS-PROGRAMM</a>
+      </div>
+
+    </div><!-- /.product-row -->
+
+  </div><!-- /.product-grid -->
+</section>
+
+<!-- ════════════════════════════════
+     BRILLE KOMPLETT
+═════════════════════════════════ -->
+<section>
+  <h2 class="section-heading">EINFACH KOMPLETT GUT.</h2>
+  <div class="komplett-wrap">
+    <div class="card-ko">
+      <div class="card-ko-content">
+        <p class="card-tag">ALLES AUS EINER HAND</p>
+        <h3 class="card-title">UNSER BRILLE-KOMPLETT-PAKET</h3>
+        <p class="card-desc">
+          Im Bereich Komplettbrille sind wir einer der Pioniere im Markt. Von dieser langjährigen
+          Expertise profitieren Optiker wie Kunden: Einerseits stellen wir höchste Qualität für die
+          komplette Brille sicher, weil alle Elemente optimal aufeinander abgestimmt sind –
+          von der Design-Signatur über die Fassungsführung bis zur Schliffgeometrie.<br><br>
+          Andererseits ist es für den Optiker unkompliziert und einfach diese Qualität anzubieten:
+          Die Konfiguration und Bestellung läuft bequem über das BASE-Partner-Portal und die
+          Komplett-Brille wird exakt nach den individuellen Vorgaben hergestellt und direkt zum
+          Optiker geliefert.
+        </p>
+        <div><a href="index.html" class="btn btn-red">MEHR ERFAHREN</a></div>
+      </div>
+      <img class="card-ko-image" src="assets/image4.png" alt="Komplett-Brille">
+    </div>
+  </div><!-- /.komplett-wrap -->
+</section>
+
+<!-- ════════════════════════════════
+     BEST-PREIS-OPTIK
+═════════════════════════════════ -->
+<section id="bpo" class="bpo-outer">
+  <h2 class="section-heading">SO VIEL MEHR ALS BRILLE.</h2>
+  <div class="bpo-card">
+
+    <div class="bpo-img-wrap">
+      <img class="bpo-photo" src="assets/image6.png" alt="Best-Preis-Optik Partnerin">
+      <img class="bpo-logo-overlay" src="assets/bpo-logo.png" alt="Best-Preis-Optik Logo">
+    </div>
+
+    <div class="bpo-content">
+      <p class="bpo-tag">UNSER KUNDENSYSTEM</p>
+      <h3 class="bpo-title">DIE BEST-PREIS-OPTIK</h3>
+      <p class="bpo-desc">
+        Für alle, die neben modernen Produkten auch ein optimiertes Kundensystem wollen.
+        Mit Best-Preis-Optik erhalten Sie genau das: ein Rundum-Sorglos Paket, das Kundenpflege,
+        Marketing und Produktmanagement für Sie übernimmt. Damit Sie sich um das kümmern können,
+        was am wichtigsten ist: Für Ihre Kunden da zu sein.
+      </p>
+      <div class="bpo-buttons">
+        <a href="index.html"    class="btn btn-white">ALLES ZUR BEST-PREIS-OPTIK</a>
+        <a href="#cta" class="btn btn-outline-light">BPO-PARTNER WERDEN</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     QUOTES SECTION
+═════════════════════════════════ -->
+<section>
+  <h2 class="section-heading">ÜBER 1.800 OPTIKER VERTRAUEN UNS.</h2>
+
+  <div class="quotes-outer">
+    <div class="q-blur-left"></div>
+    <div class="q-blur-right"></div>
+    <div class="q-track" id="qTrack">
+
+        <div class="q-slide">
+          <div class="q-slide-text">»EIN UNSCHLAGBARES ANGEBOT«</div>
+          <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+          <div class="q-slide-author">Johannes Metzger, Inhaber „Optik Metzger", Balingen</div>
+        </div>
+
+        <div class="q-slide">
+          <div class="q-slide-text">»SEIT JAHREN EIN VERLÄSSLICHER PARTNER«</div>
+          <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+          <div class="q-slide-author">Marion Huber, Geschäftsführerin „Optik Huber", Stuttgart</div>
+        </div>
+
+        <div class="q-slide">
+          <div class="q-slide-text">»DIE BESTE ENTSCHEIDUNG FÜR UNSER GESCHÄFT«</div>
+          <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+          <div class="q-slide-author">Thomas Klein, Inhaber „Augenoptik Klein", Freiburg</div>
+        </div>
+
+        <div class="q-slide">
+          <div class="q-slide-text">»QUALITÄT, DIE MAN SIEHT UND SPÜRT«</div>
+          <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+          <div class="q-slide-author">Sandra Müller, Geschäftsführerin „Optik am Markt", Ulm</div>
+        </div>
+
+        <div class="q-slide">
+          <div class="q-slide-text">»UNSER UMSATZ HAT SICH VERDOPPELT«</div>
+          <img class="q-slide-stars" src="assets/vector1.svg" alt="5 Sterne">
+          <div class="q-slide-author">Peter Bauer, Inhaber „Brillenhaus Bauer", Karlsruhe</div>
+        </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CTA
+═════════════════════════════════ -->
+<section id="cta" class="cta">
+  <h2 class="cta-title">INTERESSIERT?</h2>
+  <div class="hero-buttons">
+    <a href="index.html" class="btn btn-red">INFO-CALL VEREINBAREN</a>
+    <a href="index.html" class="btn btn-outline-dark">MUSTER-KOLLEKTION ANFRAGEN</a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+═════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-h">SORTIMENT</span>
+        <a href="kollektionen.html" class="footer-col-l">Fassungen</a>
+        <a class="footer-col-l">Gläser</a>
+        <a class="footer-col-l">Komplettbrillen</a>
+        <a class="footer-col-l">Sonnenbrillen</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KOLLEKTIONEN</span>
+        <a class="footer-col-l">B1</a>
+        <a class="footer-col-l">BE</a>
+        <a class="footer-col-l">DIFERRO</a>
+        <a class="footer-col-l">MASCA</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">PARTNER</span>
+        <a class="footer-col-l">Konzept</a>
+        <a class="footer-col-l">BPO-System</a>
+        <a class="footer-col-l">Partner werden</a>
+        <a class="footer-col-l">Partner-Login</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">ÜBER</span>
+        <a class="footer-col-l">Designhaus</a>
+        <a class="footer-col-l">Unternehmen</a>
+        <a class="footer-col-l">Karriere</a>
+        <a class="footer-col-l">Presse</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-h">KONTAKT</span>
+        <a class="footer-col-l">Zentrale</a>
+        <a class="footer-col-l">Service</a>
+        <a class="footer-col-l">Newsletter</a>
+        <a class="footer-col-l">Downloads</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════
+     COPYRIGHT
+═════════════════════════════════ -->
+<div class="copyright">
+  <div class="copyright-inner">
+    <span>© 2025 BASE Eyewear GmbH · Rechberghausen</span>
+    <a href="index.html">Datenschutz</a>
+    <a href="index.html">AGB</a>
+    <a href="index.html">Impressum</a>
+    <span>DE | EN</span>
+  </div>
+</div>
+
+</main>
+
+<!-- ════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════ -->
+<script>
+  /* Hero: autoplay video, freeze on last frame, fade in copy on end */
+  (function () {
+    const video  = document.getElementById('heroVideo');
+    const bottom = document.querySelector('.hero-bottom');
+
+    function showBottom() {
+      bottom.style.opacity = '1';
+    }
+
+    video.addEventListener('timeupdate', function () {
+      if (video.duration && video.currentTime >= video.duration * 0.8) showBottom();
+    });
+    video.addEventListener('ended', function () {
+      video.currentTime = video.duration;
+    });
+
+    /* Fallback: if video can't play (autoplay blocked), show copy immediately */
+    video.addEventListener('error', showBottom);
+    setTimeout(function () {
+      if (video.paused && video.currentTime === 0) showBottom();
+    }, 4000);
+
+    /* iOS fallback: trigger play on first touch if autoplay was blocked */
+    document.addEventListener('touchstart', function () {
+      if (video.paused && video.currentTime === 0) video.play().catch(showBottom);
+    }, { once: true, passive: true });
+  })();
+
+  /* Hamburger menu */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileNav  = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', function () {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+
+  /* Close mobile nav on link click */
+  document.querySelectorAll('.mobile-nav a, .close-nav').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  /* Quotes marquee — clone slides for seamless loop */
+  (function () {
+    const track = document.getElementById('qTrack');
+    [...track.querySelectorAll('.q-slide')].forEach(function (s) {
+      track.appendChild(s.cloneNode(true));
+    });
+  })();
+
+  /* Clickable cards */
+  document.querySelectorAll('.card, .card-ko, .bpo-card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) return;
+      var link = card.querySelector('a');
+      if (link) link.click();
+    });
+  });
+
+  /* Page transitions — header stays, only content fades */
+  var pageContent = document.querySelector('.page-content');
+  requestAnimationFrame(function () {
+    pageContent.classList.add('page-ready');
+  });
+
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || link.target === '_blank') return;
+      e.preventDefault();
+      pageContent.classList.add('page-leaving');
+      setTimeout(function () { window.location.href = href; }, 180);
+    });
+  });
+</script>
+
+</body>
+</html>
