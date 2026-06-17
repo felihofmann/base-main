@@ -42,10 +42,10 @@
   .header {
     position: sticky; top: 0; z-index: 200;
     width: 100%; height: var(--header-h);
-    background: linear-gradient(to bottom, rgba(10,10,10,0.97), rgba(75,75,75,0.93));
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-bottom: 1px solid rgba(220,220,220,0.45);
+    background: linear-gradient(to top, rgba(210,210,210,0.55), rgba(255,255,255,0.82));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
   }
 
   .header-inner {
@@ -61,14 +61,14 @@
   .nav { display: flex; gap: 2px; align-items: center; flex: 1; justify-content: center; }
   .nav-item {
     padding: 5px 9px;
-    font-weight: 400; font-size: 14px; color: #fff;
+    font-weight: 400; font-size: 14px; color: #000;
     text-decoration: none; white-space: nowrap;
     transition: color .15s;
     position: relative;
   }
   .nav-item::after {
     content: ''; position: absolute; bottom: 2px; left: 9px;
-    width: 0; height: 1px; background: #fff;
+    width: 0; height: 1px; background: #000;
     transition: width .3s ease;
   }
   .nav-item:hover::after { width: calc(100% - 18px); }
@@ -77,19 +77,19 @@
   .header-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
   .action-item {
     display: flex; gap: 5px; align-items: center;
-    padding: 5px; font-weight: 400; font-size: 14px; color: #fff;
+    padding: 5px; font-weight: 400; font-size: 14px; color: #000;
     text-decoration: none; white-space: nowrap;
     transition: color .15s;
     position: relative;
   }
   .action-item::after {
     content: ''; position: absolute; bottom: 2px; left: 5px;
-    width: 0; height: 1px; background: #fff;
+    width: 0; height: 1px; background: #000;
     transition: width .3s ease;
   }
   .action-item:hover::after { width: calc(100% - 10px); }
-  .action-item .ico { width: 13px; height: 13px; filter: brightness(0) invert(1); }
-  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0) invert(1); }
+  .action-item .ico { width: 13px; height: 13px; filter: brightness(0); }
+  .action-item .ico-user { width: 17px; height: 17px; filter: brightness(0); }
 
   /* Hamburger button */
   .hamburger {
@@ -98,7 +98,7 @@
     background: none; border: none; cursor: pointer; margin-left: auto; flex-shrink: 0;
   }
   .hamburger span {
-    display: block; width: 22px; height: 2px; background: #fff;
+    display: block; width: 22px; height: 2px; background: #000;
     transition: transform .28s ease, opacity .28s ease;
   }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -618,7 +618,7 @@
 ═════════════════════════════════ -->
 <header class="header">
   <div class="header-inner">
-    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo.png" alt="BASE Eyewear"></a>
+    <a href="index.html" class="header-logo-link"><img class="header-logo" src="assets/logo_black_pur.png" alt="BASE Eyewear"></a>
 
     <nav class="nav">
       <a href="konzept.html"         class="nav-item">KONZEPT</a>
@@ -713,7 +713,7 @@
 
       <!-- Card Kollektionen -->
       <div class="card card-koll">
-        <p class="card-tag">BASE FASSUNG</p>
+        <p class="card-tag">BASE EYEWEAR</p>
         <h3 class="card-title">UNSERE MARKEN-KOLLEKTIONEN</h3>
         <img class="card-img" src="assets/sketch.png" alt="Kollektionen Sketch">
         <p class="card-desc">
@@ -775,8 +775,8 @@
   <div class="bpo-card">
 
     <div class="bpo-img-wrap">
-      <img class="bpo-photo" src="assets/image6.png" alt="Best-Preis-Optik Partnerin">
-      <img class="bpo-logo-overlay" src="assets/bpo-logo.png" alt="Best-Preis-Optik Logo">
+      <img class="bpo-photo" src="assets/image6.png" alt="Best-Preis Optik Partnerin">
+      <img class="bpo-logo-overlay" src="assets/bpo-logo.png" alt="Best-Preis Optik Logo">
     </div>
 
     <div class="bpo-content">
@@ -784,7 +784,7 @@
       <h3 class="bpo-title">BEST-PREIS OPTIK</h3>
       <p class="bpo-desc">
         Für alle, die neben modernen Produkten auch ein optimiertes Kundensystem wollen.
-        Mit Best-Preis-Optik erhalten Sie genau das: ein Rundum-Sorglos Paket, das Kundenpflege,
+        Mit Best-Preis Optik erhalten Sie genau das: ein Rundum-Sorglos Paket, das Kundenpflege,
         Marketing und Produktmanagement für Sie übernimmt. Damit Sie sich um das kümmern können,
         was am wichtigsten ist: Für Ihre Kunden da zu sein.
       </p>
@@ -858,7 +858,7 @@
 ═════════════════════════════════ -->
 <footer class="footer">
   <div class="footer-inner">
-    <img class="footer-logo" src="assets/logo.png" alt="BASE Eyewear">
+    <img class="footer-logo" src="assets/logo_black_pur.png" alt="BASE Eyewear">
     <div class="footer-cols">
       <div class="footer-col">
         <span class="footer-col-h">SORTIMENT</span>
